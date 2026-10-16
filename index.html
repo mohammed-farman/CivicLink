@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CivicLink | Community Reporting</title>
+
+    <meta name="description"
+        content="CivicLink is a community-focused platform for reporting and tracking civic issues.">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background: skyblue;
+            font-family: "Poppins", Arial, sans-serif;
+            color: #0B1F3A;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: #0B1F3A;
+            padding: 16px 15px;
+
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-inner {
+            width: 100%;
+            max-width: 1100px;
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .logo {
+            margin: 0;
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            color: white;
+        }
+
+        .C {
+            color: #90CAF9;
+        }
+
+        .L {
+            color: #BBDEFB;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+
+            padding: 9px 13px;
+            border-radius: 12px;
+
+            font-size: 14px;
+            font-weight: 700;
+
+            transition: 0.2s ease;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .nav-report {
+            background: #42A5F5;
+            color: #0B1F3A !important;
+        }
+
+        .nav-report:hover {
+            background: #64B5F6;
+        }
+
+        /* =========================
+           GENERAL
+        ========================= */
+
+        section {
+            width: 100%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 70px 20px;
+        }
+
+        .section-title {
+            margin: 0 0 10px;
+            font-size: 36px;
+            font-weight: 900;
+        }
+
+        .section-subtitle {
+            margin: 0 0 30px;
+            color: #294D68;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           HOME
+        ========================= */
+
+        #home {
+            min-height: 75vh;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .home-badge {
+            display: inline-block;
+            width: fit-content;
+
+            padding: 8px 14px;
+            margin-bottom: 18px;
+
+            border-radius: 50px;
+
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .home-title {
+            margin: 0 0 18px;
+
+            font-size: clamp(42px, 8vw, 72px);
+            line-height: 1.05;
+            font-weight: 900;
+            letter-spacing: -2px;
+        }
+
+        .home-title span {
+            color: #0B1F3A;
+        }
+
+        .home-text {
+            max-width: 700px;
+
+            margin: 0 0 30px;
+
+            color: #244B68;
+
+            font-size: 19px;
+            line-height: 1.7;
+        }
+
+        .home-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            display: inline-block;
+
+            padding: 13px 20px;
+
+            border-radius: 15px;
+
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+
+            text-decoration: none;
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .primary-btn {
+            background: #0B1F3A;
+            color: white;
+        }
+
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.4);
+            color: #0B1F3A;
+
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .primary-btn:hover,
+        .secondary-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        /* =========================
+           UPDATE CARDS
+        ========================= */
+
+        .updates {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .update-card {
+            padding: 25px;
+
+            background: rgba(255, 255, 255, 0.35);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 24px;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+
+            transition: 0.25s ease;
+        }
+
+        .update-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .update-icon {
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .update-card h3 {
+            margin: 0 0 8px;
+            font-size: 20px;
+        }
+
+        .update-card p {
+            margin: 0;
+
+            color: #31566F;
+
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           ISSUES
+        ========================= */
+
+        #issues {
+            min-height: 60vh;
+        }
+
+        .issues-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .empty-issues {
+            padding: 35px;
+
+            text-align: center;
+
+            background: rgba(255, 255, 255, 0.35);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 24px;
+
+            color: #294D68;
+        }
+
+        .issue-card {
+            padding: 22px;
+
+            background: rgba(255, 255, 255, 0.4);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 22px;
+
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+
+            animation: issueAppear 0.4s ease;
+        }
+
+        @keyframes issueAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .issue-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .issue-card h3 {
+            margin: 0;
+            font-size: 19px;
+        }
+
+        .status {
+            padding: 6px 10px;
+
+            background: #FFF3CD;
+            color: #795548;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+        .issue-card p {
+            margin: 12px 0 0;
+
+            color: #31566F;
+            line-height: 1.6;
+        }
+
+        .issue-meta {
+            margin-top: 15px;
+
+            color: #456A82;
+
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .issue-number {
+            font-size: 12px;
+            font-weight: 800;
+            color: #456A82;
+            margin-bottom: 5px;
+        }
+
+        /* =========================
+           REPORT
+        ========================= */
+
+        #report {
+            min-height: 80vh;
+        }
+
+        .report-card {
+            width: 100%;
+            max-width: 650px;
+            margin: auto;
+
+            padding: 30px;
+
+            background: rgba(255, 255, 255, 0.35);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 30px;
+
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .report-icon {
+            font-size: 42px;
+        }
+
+        .report-card h2 {
+            margin: 8px 0;
+            font-size: 30px;
+        }
+
+        .report-card > p {
+            margin-bottom: 25px;
+
+            color: #31566F;
+            line-height: 1.6;
+        }
+
+        .report-card label {
+            display: block;
+
+            margin: 17px 0 7px;
+
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .report-card input,
+        .report-card textarea,
+        .report-card select {
+            width: 100%;
+
+            padding: 13px 15px;
+
+            background: rgba(255, 255, 255, 0.5);
+
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 14px;
+
+            font-family: inherit;
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        .report-card input:focus,
+        .report-card textarea:focus,
+        .report-card select:focus {
+            border-color: #42A5F5;
+
+            box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.15);
+        }
+
+        .report-card textarea {
+            resize: vertical;
+        }
+
+        .report-card input::placeholder,
+        .report-card textarea::placeholder {
+            color: #557085;
+        }
+
+        .location-btn {
+            width: 100%;
+
+            margin-top: 12px;
+            padding: 12px;
+
+            border: 1px solid rgba(11, 31, 58, 0.2);
+            border-radius: 14px;
+
+            background: rgba(255, 255, 255, 0.4);
+            color: #0B1F3A;
+
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .location-btn:hover {
+            background: rgba(255, 255, 255, 0.65);
+        }
+
+        #location-status {
+            margin: 8px 2px 15px;
+
+            color: #36566F;
+            font-size: 12px;
+        }
+
+        .submit-btn {
+            width: 100%;
+
+            margin-top: 20px;
+            padding: 14px;
+
+            border: none;
+            border-radius: 15px;
+
+            background: #0B1F3A;
+            color: white;
+
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: #12345A;
+            transform: translateY(-2px);
+        }
+
+        /* =========================
+           ABOUT
+        ========================= */
+
+        #about,
+        #developer {
+            min-height: 50vh;
+        }
+
+        .about-box {
+            padding: 30px;
+
+            background: rgba(255, 255, 255, 0.35);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+
+            border: 1px solid rgba(255, 255, 255, 0.55);
+            border-radius: 28px;
+
+            line-height: 1.8;
+
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+        }
+
+        .about-box p {
+            margin-top: 0;
+            color: #294D68;
+        }
+
+        .steps {
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 15px;
+
+            margin-top: 25px;
+        }
+
+        .step {
+            padding: 18px;
+
+            background: rgba(255, 255, 255, 0.3);
+
+            border-radius: 18px;
+
+            text-align: center;
+        }
+
+        .step strong {
+            display: block;
+
+            margin-bottom: 5px;
+
+            font-size: 15px;
+        }
+
+        .step span {
+            color: #456A82;
+            font-size: 13px;
+        }
+
+        /* =========================
+           STORAGE PANEL
+        ========================= */
+
+        .storage-panel {
+            margin-top: 25px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+
+            padding: 18px;
+
+            background: rgba(255, 255, 255, 0.25);
+
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 18px;
+        }
+
+        .storage-info {
+            font-size: 13px;
+            color: #294D68;
+        }
+
+        .clear-btn {
+            padding: 9px 13px;
+
+            border: none;
+            border-radius: 10px;
+
+            background: rgba(255, 255, 255, 0.55);
+            color: #0B1F3A;
+
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .clear-btn:hover {
+            background: white;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            padding: 25px 15px;
+
+            background: #0B1F3A;
+            color: white;
+
+            text-align: center;
+            font-size: 13px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 767px) {
+
+            .header {
+                padding: 15px 10px;
+            }
+
+            .header-inner {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .logo {
+                font-size: 34px;
+            }
+
+            nav {
+                width: 100%;
+                justify-content: center;
+            }
+
+            nav a {
+                font-size: 13px;
+                padding: 8px 10px;
+            }
+
+            section {
+                padding: 55px 15px;
+            }
+
+            .section-title {
+                font-size: 30px;
+            }
+
+            .home-text {
+                font-size: 16px;
+            }
+
+            .updates {
+                grid-template-columns: 1fr;
+            }
+
+            .steps {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .report-card {
+                padding: 23px;
+                border-radius: 24px;
+            }
+
+            .report-card h2 {
+                font-size: 26px;
+            }
+
+            .issue-top {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 400px) {
+
+            .logo {
+                font-size: 31px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 7px 9px;
+            }
+
+            .home-title {
+                font-size: 42px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="header">
+
+        <div class="header-inner">
+
+            <h1 class="logo">
+                <span class="C">C</span>ivic<span class="L">L</span>ink
+            </h1>
+
+            <nav>
+
+                <a href="#home">Home</a>
+
+                <a href="#issues">Issues</a>
+
+                <a href="#about">About</a>
+
+                <a href="#developer">Developer</a>
+
+                <a href="#report" class="nav-report">
+                    Report Issue
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         HOME
+    ========================= -->
+
+    <section id="home">
+
+        <div class="home-badge">
+            🇮🇳 Building Better Communities
+        </div>
+
+        <h2 class="home-title">
+            Know your community.<br>
+            <span>Make it better.</span>
+        </h2>
+
+        <p class="home-text">
+            CivicLink is a community-focused platform designed
+            to keep people informed about civic issues, encourage
+            responsible reporting and connect problems with
+            people who can help solve them.
+        </p>
+
+        <div class="home-buttons">
+
+            <a href="#issues" class="primary-btn">
+                Explore Issues →
+            </a>
+
+            <a href="#report" class="secondary-btn">
+                Report a Problem
+            </a>
+
+        </div>
+
+
+        <!-- CIVIC UPDATES -->
+
+        <div style="margin-top:60px;">
+
+            <h2 class="section-title">
+                Civic Updates
+            </h2>
+
+            <p class="section-subtitle">
+                Learn about civic activities, community improvements
+                and important public issues happening around us.
+            </p>
+
+            <div class="updates">
+
+                <div class="update-card">
+
+                    <div class="update-icon">
+                        🏙️
+                    </div>
+
+                    <h3>
+                        Local Development
+                    </h3>
+
+                    <p>
+                        Civic development projects can improve
+                        roads, public spaces, sanitation and
+                        essential services in communities.
+                    </p>
+
+                </div>
+
+                <div class="update-card">
+
+                    <div class="update-icon">
+                        🧹
+                    </div>
+
+                    <h3>
+                        Cleaner Communities
+                    </h3>
+
+                    <p>
+                        Responsible waste management and clean
+                        public spaces help create healthier and
+                        safer neighbourhoods.
+                    </p>
+
+                </div>
+
+                <div class="update-card">
+
+                    <div class="update-icon">
+                        💡
+                    </div>
+
+                    <h3>
+                        Community Awareness
+                    </h3>
+
+                    <p>
+                        Knowing what is happening around us helps
+                        citizens understand problems and take
+                        responsible action.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ISSUES
+    ========================= -->
+
+    <section id="issues">
+
+        <h2 class="section-title">
+            Civic Issues
+        </h2>
+
+        <p class="section-subtitle">
+            See issues reported on this browser and follow
+            the progress of problems in the community.
+        </p>
+
+        <div id="issues-list" class="issues-list">
+
+            <div id="empty-issues" class="empty-issues">
+
+                <h3>
+                    No Issues Yet
+                </h3>
+
+                <p>
+                    No civic issues have been submitted yet.
+                </p>
+
+                <p>
+                    Be the first to report a civic issue.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- STORAGE CONTROLS -->
+
+        <div class="storage-panel">
+
+            <div class="storage-info">
+                💾 <strong>Local Storage:</strong>
+                Your submitted issues are saved in this browser.
+            </div>
+
+            <button
+                class="clear-btn"
+                type="button"
+                onclick="clearAllIssues()"
+            >
+                Clear Saved Issues
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         REPORT ISSUE
+    ========================= -->
+
+    <section id="report">
+
+        <div class="report-card">
+
+            <div class="report-icon">
+                📢
+            </div>
+
+            <h2>
+                File a Complaint
+            </h2>
+
+            <p>
+                Found a problem in your community?
+                Tell CivicLink about it so the issue can
+                be recorded and reviewed.
+            </p>
+
+
+            <label for="subject">
+                Subject
+            </label>
+
+            <input
+                type="text"
+                id="subject"
+                maxlength="100"
+                placeholder="What is the problem?"
+            >
+
+
+            <label for="category">
+                Category
+            </label>
+
+            <select id="category">
+
+                <option value="">
+                    Select issue category
+                </option>
+
+                <option value="Roads">
+                    Roads & Potholes
+                </option>
+
+                <option value="Streetlights">
+                    Streetlights
+                </option>
+
+                <option value="Waste">
+                    Waste & Cleanliness
+                </option>
+
+                <option value="Water">
+                    Water Supply
+                </option>
+
+                <option value="Public Safety">
+                    Public Safety
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+
+            <label for="complaint">
+                Complaint
+            </label>
+
+            <textarea
+                id="complaint"
+                rows="6"
+                maxlength="1000"
+                placeholder="Describe the problem in detail..."
+            ></textarea>
+
+
+            <label for="address">
+                Address
+            </label>
+
+            <input
+                type="text"
+                id="address"
+                maxlength="250"
+                placeholder="Enter the exact address"
+            >
+
+
+            <button
+                type="button"
+                class="location-btn"
+                onclick="getLocation()"
+            >
+                📍 Use Current Location
+            </button>
+
+            <p id="location-status">
+                Don't know the address?
+                You can use your current location.
+            </p>
+
+
+            <button
+                type="button"
+                class="submit-btn"
+                onclick="submitComplaint()"
+            >
+                Submit Complaint →
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================= -->
+
+    <section id="about">
+
+        <h2 class="section-title">
+            About CivicLink
+        </h2>
+
+        <p class="section-subtitle">
+            A simple idea: make it easier for people to understand
+            civic problems and easier for communities to report them.
+        </p>
+
+        <div class="about-box">
+
+            <p>
+                <strong>CivicLink</strong> is a community-focused
+                civic platform designed to connect people with
+                information about the issues around them.
+            </p>
+
+            <p>
+                The idea begins in Andhra Pradesh and can eventually
+                expand to communities across India. People should
+                be able to report problems such as damaged roads,
+                broken streetlights, waste-management problems,
+                water issues and other civic concerns from one
+                simple platform.
+            </p>
+
+            <p>
+                CivicLink is not only about reporting problems.
+                It is also about <strong>awareness</strong>.
+                By showing civic updates, community issues and
+                improvements, the platform can help people learn
+                more about how their communities are developing.
+            </p>
+
+            <p>
+                The long-term vision is to create a system where
+                a reported issue can be recorded, reviewed,
+                assigned to the appropriate team and eventually
+                marked as resolved.
+            </p>
+
+            <div class="steps">
+
+                <div class="step">
+                    <strong>1. Report</strong>
+                    <span>People submit a civic issue.</span>
+                </div>
+
+                <div class="step">
+                    <strong>2. Review</strong>
+                    <span>The report is checked.</span>
+                </div>
+
+                <div class="step">
+                    <strong>3. Action</strong>
+                    <span>The responsible team can respond.</span>
+                </div>
+
+                <div class="step">
+                    <strong>4. Resolve</strong>
+                    <span>The issue can be updated as resolved.</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         DEVELOPER
+    ========================= -->
+
+    <section id="developer">
+
+        <h2 class="section-title">
+            Meet the Developer
+        </h2>
+
+        <p class="section-subtitle">
+            Learn more about the creator behind CivicLink.
+        </p>
+
+        <div class="about-box">
+
+            <p>
+                <strong>Mohammed Farman</strong> is a student and
+                the developer of CivicLink. I am currently working
+                hard to excel in Physics and Mathematics, with
+                guidance from my teachers.
+            </p>
+
+            <p>
+                I have a passion for technology and am learning
+                HTML, CSS, and JavaScript, while also exploring
+                Machine Learning to build my own AI assistant.
+                Alongside CivicLink, I am developing Focura,
+                a productivity project.
+            </p>
+
+            <p>
+                I also enjoy playing Badminton and exploring
+                technology through personal projects.
+            </p>
+
+            <p>
+                Thank you for visiting my new web app.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <p>
+            <strong>CivicLink © 2026</strong>
+        </p>
+
+        <p>
+            Built for better, safer and smarter communities.
+            Still under construction!
+        </p>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+         LOCAL STORAGE VERSION
+    ========================= -->
+
+    <script>
+
+        /* =====================================
+           CIVICLINK STORAGE CONFIG
+        ===================================== */
+
+        const STORAGE_KEY = "civicLinkIssues";
+
+        let userLatitude = null;
+        let userLongitude = null;
+
+
+        /* =====================================
+           SAFE STORAGE READ
+        ===================================== */
+
+        function getIssues() {
+
+            try {
+
+                const saved =
+                    localStorage.getItem(STORAGE_KEY);
+
+                if (!saved) {
+                    return [];
+                }
+
+                const parsed =
+                    JSON.parse(saved);
+
+                return Array.isArray(parsed)
+                    ? parsed
+                    : [];
+
+            } catch (error) {
+
+                console.error(
+                    "Could not read CivicLink data:",
+                    error
+                );
+
+                return [];
+            }
+        }
+
+
+        /* =====================================
+           SAFE STORAGE SAVE
+        ===================================== */
+
+        function saveIssues(issues) {
+
+            try {
+
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    JSON.stringify(issues)
+                );
+
+                return true;
+
+            } catch (error) {
+
+                console.error(
+                    "Could not save CivicLink data:",
+                    error
+                );
+
+                alert(
+                    "Unable to save the issue in this browser."
+                );
+
+                return false;
+            }
+        }
+
+
+        /* =====================================
+           CURRENT LOCATION
+        ===================================== */
+
+        function getLocation() {
+
+            const status =
+                document.getElementById(
+                    "location-status"
+                );
+
+
+            if (!navigator.geolocation) {
+
+                status.textContent =
+                    "❌ Location is not supported by this browser.";
+
+                return;
+            }
+
+
+            status.textContent =
+                "📍 Getting your current location...";
+
+
+            navigator.geolocation.getCurrentPosition(
+
+                function(position) {
+
+                    userLatitude =
+                        position.coords.latitude;
+
+                    userLongitude =
+                        position.coords.longitude;
+
+
+                    status.textContent =
+                        "✅ Current location added successfully.";
+
+                },
+
+                function(error) {
+
+                    console.error(
+                        "Geolocation error:",
+                        error
+                    );
+
+                    status.textContent =
+                        "❌ Location permission was not given.";
+
+                },
+
+                {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                }
+
+            );
+
+        }
+
+
+        /* =====================================
+           SUBMIT COMPLAINT
+        ===================================== */
+
+        function submitComplaint() {
+
+            const subject =
+                document
+                    .getElementById("subject")
+                    .value
+                    .trim();
+
+            const category =
+                document
+                    .getElementById("category")
+                    .value;
+
+            const complaint =
+                document
+                    .getElementById("complaint")
+                    .value
+                    .trim();
+
+            const address =
+                document
+                    .getElementById("address")
+                    .value
+                    .trim();
+
+
+            /* VALIDATION */
+
+            if (!subject) {
+
+                alert(
+                    "Please enter the subject."
+                );
+
+                return;
+            }
+
+
+            if (!category) {
+
+                alert(
+                    "Please select a category."
+                );
+
+                return;
+            }
+
+
+            if (!complaint) {
+
+                alert(
+                    "Please describe the complaint."
+                );
+
+                return;
+            }
+
+
+            if (
+                !address &&
+                userLatitude === null
+            ) {
+
+                alert(
+                    "Please enter the address or use your current location."
+                );
+
+                return;
+            }
+
+
+            /* GET SAVED ISSUES */
+
+            const issues =
+                getIssues();
+
+
+            /* CREATE UNIQUE ISSUE */
+
+            const newIssue = {
+
+                id:
+                    crypto.randomUUID
+                    ? crypto.randomUUID()
+                    : String(Date.now()),
+
+                number:
+                    issues.length + 1,
+
+                subject:
+                    subject,
+
+                category:
+                    category,
+
+                complaint:
+                    complaint,
+
+                address:
+                    address,
+
+                latitude:
+                    userLatitude,
+
+                longitude:
+                    userLongitude,
+
+                status:
+                    "Pending",
+
+                date:
+                    new Date().toLocaleString(
+                        "en-IN"
+                    )
+
+            };
+
+
+            /* SAVE */
+
+            issues.push(newIssue);
+
+
+            const saved =
+                saveIssues(issues);
+
+
+            if (!saved) {
+                return;
+            }
+
+
+            /* REFRESH UI */
+
+            displayIssues();
+
+
+            /* CLEAR FORM */
+
+            document
+                .getElementById("subject")
+                .value = "";
+
+            document
+                .getElementById("category")
+                .value = "";
+
+            document
+                .getElementById("complaint")
+                .value = "";
+
+            document
+                .getElementById("address")
+                .value = "";
+
+
+            userLatitude = null;
+            userLongitude = null;
+
+
+            document
+                .getElementById("location-status")
+                .textContent =
+                "Don't know the address? You can use your current location.";
+
+
+            /* MOVE TO ISSUES */
+
+            document
+                .getElementById("issues")
+                .scrollIntoView({
+                    behavior: "smooth"
+                });
+
+
+            alert(
+                "✅ Complaint submitted successfully!"
+            );
+
+        }
+
+
+        /* =====================================
+           DISPLAY ISSUES
+        ===================================== */
+
+        function displayIssues() {
+
+            const issuesList =
+                document.getElementById(
+                    "issues-list"
+                );
+
+            const emptyMessage =
+                document.getElementById(
+                    "empty-issues"
+                );
+
+
+            const issues =
+                getIssues();
+
+
+            /* REMOVE PREVIOUS GENERATED CARDS */
+
+            document
+                .querySelectorAll(
+                    ".generated-issue"
+                )
+                .forEach(function(card) {
+
+                    card.remove();
+
+                });
+
+
+            /* EMPTY STATE */
+
+            if (issues.length === 0) {
+
+                emptyMessage.style.display =
+                    "block";
+
+                return;
+            }
+
+
+            emptyMessage.style.display =
+                "none";
+
+
+            /* CREATE CARDS */
+
+            issues.forEach(function(issue, index) {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "issue-card generated-issue";
+
+
+                let locationText =
+                    "Location not provided";
+
+
+                if (issue.address) {
+
+                    locationText =
+                        "📍 " +
+                        issue.address;
+
+                }
+
+
+                if (
+                    issue.latitude !== null &&
+                    issue.longitude !== null
+                ) {
+
+                    locationText +=
+                        " • GPS: " +
+                        Number(
+                            issue.latitude
+                        ).toFixed(5) +
+                        ", " +
+                        Number(
+                            issue.longitude
+                        ).toFixed(5);
+
+                }
+
+
+                const issueNumber =
+                    index + 1;
+
+
+                card.innerHTML = `
+
+                    <div class="issue-number">
+                        CIVICLINK ISSUE #${issueNumber}
+                    </div>
+
+                    <div class="issue-top">
+
+                        <h3>
+                            ${escapeHTML(
+                                issue.subject
+                            )}
+                        </h3>
+
+                        <span class="status">
+                            ${escapeHTML(
+                                issue.status
+                            )}
+                        </span>
+
+                    </div>
+
+                    <p>
+                        ${escapeHTML(
+                            issue.complaint
+                        )}
+                    </p>
+
+                    <div class="issue-meta">
+
+                        🏷️
+                        ${escapeHTML(
+                            issue.category
+                        )}
+
+                        <br>
+
+                        ${escapeHTML(
+                            locationText
+                        )}
+
+                        <br>
+
+                        🕒
+                        ${escapeHTML(
+                            issue.date
+                        )}
+
+                    </div>
+
+                `;
+
+
+                issuesList.appendChild(card);
+
+            });
+
+        }
+
+
+        /* =====================================
+           ESCAPE USER TEXT
+        ===================================== */
+
+        function escapeHTML(text) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+            div.textContent =
+                String(text ?? "");
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =====================================
+           CLEAR ALL LOCAL DATA
+        ===================================== */
+
+        function clearAllIssues() {
+
+            const issues =
+                getIssues();
+
+
+            if (issues.length === 0) {
+
+                alert(
+                    "There are no saved issues to clear."
+                );
+
+                return;
+            }
+
+
+            const confirmed =
+                confirm(
+                    "Delete all CivicLink issues saved in this browser?"
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            localStorage.removeItem(
+                STORAGE_KEY
+            );
+
+
+            displayIssues();
+
+
+            alert(
+                "🗑️ All locally saved issues have been removed."
+            );
+
+        }
+
+
+        /* =====================================
+           START APPLICATION
+        ===================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                displayIssues();
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
