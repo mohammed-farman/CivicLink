@@ -1,1767 +1,4668 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CivicLink | Community Reporting</title>
-
-    <meta name="description"
-        content="CivicLink is a community-focused platform for reporting and tracking civic issues.">
-
-    <style>
-        * {
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            margin: 0;
-            background: skyblue;
-            font-family: "Poppins", Arial, sans-serif;
-            color: #0B1F3A;
-        }
-
-        /* =========================
-           HEADER
-        ========================= */
-
-        .header {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-
-            background: #0B1F3A;
-            padding: 16px 15px;
-
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
-        }
-
-        .header-inner {
-            width: 100%;
-            max-width: 1100px;
-            margin: auto;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .logo {
-            margin: 0;
-            font-size: 36px;
-            font-weight: 900;
-            letter-spacing: -1px;
-            color: white;
-        }
-
-        .C {
-            color: #90CAF9;
-        }
-
-        .L {
-            color: #BBDEFB;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-
-            padding: 9px 13px;
-            border-radius: 12px;
-
-            font-size: 14px;
-            font-weight: 700;
-
-            transition: 0.2s ease;
-        }
-
-        nav a:hover {
-            background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-2px);
-        }
-
-        .nav-report {
-            background: #42A5F5;
-            color: #0B1F3A !important;
-        }
-
-        .nav-report:hover {
-            background: #64B5F6;
-        }
-
-        /* =========================
-           GENERAL
-        ========================= */
-
-        section {
-            width: 100%;
-            max-width: 1100px;
-            margin: auto;
-            padding: 70px 20px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0B1F3A">
+
+<title>CivicLink</title>
+
+<style>
+/* =========================================================
+   CIVICLINK — COMPLETE SINGLE FILE
+   HTML + CSS + JAVASCRIPT
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --navy: #0B1F3A;
+    --navy-2: #102D4A;
+    --blue: #38BDF8;
+    --blue-dark: #0284C7;
+    --sky: #87CEEB;
+    --white: #FFFFFF;
+    --text: #0B1F3A;
+    --muted: #45677D;
+    --glass: rgba(255,255,255,0.52);
+    --glass-strong: rgba(255,255,255,0.72);
+    --border: rgba(255,255,255,0.75);
+    --shadow: 0 15px 40px rgba(11,31,58,0.14);
+    --danger: #ef4444;
+    --success: #10b981;
+    --warning: #f59e0b;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 10% 0%, rgba(255,255,255,0.45), transparent 30%),
+        linear-gradient(
+            180deg,
+            #78C9EA 0%,
+            #A9DEF1 38%,
+            #A9DEF1 38%,
+            #A9DEF1 38%
+        );
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: rgba(11,31,58,0.96);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow: 0 5px 25px rgba(0,0,0,0.20);
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: auto;
+
+    min-height: 68px;
+    padding: 10px 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.logo {
+    color: white;
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -1px;
+    white-space: nowrap;
+}
+
+.logo-c {
+    color: #90CAF9;
+}
+
+.logo-l {
+    color: #BBDEFB;
+}
+
+.desktop-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
 
-        .section-title {
-            margin: 0 0 10px;
-            font-size: 36px;
-            font-weight: 900;
-        }
+.desktop-nav a {
+    color: white;
+    text-decoration: none;
 
-        .section-subtitle {
-            margin: 0 0 30px;
-            color: #294D68;
-            font-size: 16px;
-            line-height: 1.6;
-        }
+    padding: 9px 12px;
 
-        /* =========================
-           HOME
-        ========================= */
+    border-radius: 11px;
 
-        #home {
-            min-height: 75vh;
+    font-size: 13px;
+    font-weight: 700;
 
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+    transition: 0.2s;
+}
 
-        .home-badge {
-            display: inline-block;
-            width: fit-content;
+.desktop-nav a:hover {
+    background: rgba(255,255,255,0.12);
+}
 
-            padding: 8px 14px;
-            margin-bottom: 18px;
+.desktop-nav .report-link {
+    background: var(--blue);
+    color: var(--navy);
+}
 
-            border-radius: 50px;
+/* =========================================================
+   GENERAL
+   ========================================================= */
 
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+main {
+    width: 100%;
+}
 
-            font-size: 13px;
-            font-weight: 700;
-        }
+section {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 65px 18px;
+}
 
-        .home-title {
-            margin: 0 0 18px;
+.section-title {
+    font-size: 36px;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
 
-            font-size: clamp(42px, 8vw, 72px);
-            line-height: 1.05;
-            font-weight: 900;
-            letter-spacing: -2px;
-        }
+.section-subtitle {
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 25px;
+}
 
-        .home-title span {
-            color: #0B1F3A;
-        }
+.hero {
+    min-height: 78vh;
 
-        .home-text {
-            max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-            margin: 0 0 30px;
+.badge {
+    display: inline-flex;
+    width: max-content;
 
-            color: #244B68;
+    padding: 8px 13px;
 
-            font-size: 19px;
-            line-height: 1.7;
-        }
+    border-radius: 999px;
 
-        .home-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
+    background: rgba(255,255,255,0.48);
+    border: 1px solid var(--border);
 
-        .primary-btn,
-        .secondary-btn {
-            display: inline-block;
+    font-size: 12px;
+    font-weight: 800;
+}
 
-            padding: 13px 20px;
+.hero-title {
+    margin-top: 16px;
+    margin-bottom: 18px;
 
-            border-radius: 15px;
+    font-size: clamp(42px, 8vw, 76px);
+    line-height: 1.02;
 
-            font-family: inherit;
-            font-size: 15px;
-            font-weight: 700;
+    font-weight: 900;
+    letter-spacing: -3px;
+}
 
-            text-decoration: none;
-            cursor: pointer;
+.hero-title span {
+    color: var(--navy);
+}
 
-            transition: 0.2s ease;
-        }
+.hero-description {
+    max-width: 760px;
 
-        .primary-btn {
-            background: #0B1F3A;
-            color: white;
-        }
+    color: #244B68;
 
-        .secondary-btn {
-            background: rgba(255, 255, 255, 0.4);
-            color: #0B1F3A;
+    font-size: 18px;
+    line-height: 1.75;
 
-            border: 1px solid rgba(255, 255, 255, 0.6);
-        }
+    margin-bottom: 25px;
+}
 
-        .primary-btn:hover,
-        .secondary-btn:hover {
-            transform: translateY(-3px);
-        }
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 
-        /* =========================
-           UPDATE CARDS
-        ========================= */
+/* =========================================================
+   BUTTONS
+   ========================================================= */
 
-        .updates {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-        }
+.btn {
+    border: 1px solid rgba(11,31,58,0.18);
 
-        .update-card {
-            padding: 25px;
+    border-radius: 13px;
 
-            background: rgba(255, 255, 255, 0.35);
+    padding: 11px 15px;
 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+    min-height: 44px;
 
-            border: 1px solid rgba(255, 255, 255, 0.55);
-            border-radius: 24px;
+    background: rgba(255,255,255,0.5);
 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
+    color: var(--navy);
 
-            transition: 0.25s ease;
-        }
+    font-weight: 750;
 
-        .update-card:hover {
-            transform: translateY(-5px);
-        }
+    transition: 0.2s;
+}
 
-        .update-icon {
-            margin-bottom: 10px;
-            font-size: 32px;
-        }
+.btn:hover {
+    transform: translateY(-2px);
+}
 
-        .update-card h3 {
-            margin: 0 0 8px;
-            font-size: 20px;
-        }
+.btn-primary {
+    background: var(--navy);
+    color: white;
+}
 
-        .update-card p {
-            margin: 0;
+.btn-blue {
+    background: var(--blue);
+    color: var(--navy);
+    border-color: transparent;
+}
 
-            color: #31566F;
+.btn-danger {
+    background: #fee2e2;
+    color: #991b1b;
+}
 
-            font-size: 14px;
-            line-height: 1.6;
-        }
+.btn-success {
+    background: #d1fae5;
+    color: #065f46;
+}
 
-        /* =========================
-           ISSUES
-        ========================= */
+/* =========================================================
+   CARDS
+   ========================================================= */
 
-        #issues {
-            min-height: 60vh;
-        }
+.card,
+.update-card,
+.issue-card,
+.news-card,
+.community-card,
+.chat-shell,
+.profile-card {
+    background: var(--glass);
 
-        .issues-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 
-        .empty-issues {
-            padding: 35px;
+    border: 1px solid var(--border);
 
-            text-align: center;
+    border-radius: 20px;
 
-            background: rgba(255, 255, 255, 0.35);
+    box-shadow: var(--shadow);
+}
 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+.card {
+    padding: 20px;
+}
 
-            border: 1px solid rgba(255, 255, 255, 0.55);
-            border-radius: 24px;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0,1fr));
+    gap: 17px;
+}
 
-            color: #294D68;
-        }
+.span-12 {
+    grid-column: span 12;
+}
 
-        .issue-card {
-            padding: 22px;
+.span-8 {
+    grid-column: span 8;
+}
 
-            background: rgba(255, 255, 255, 0.4);
+.span-6 {
+    grid-column: span 6;
+}
 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+.span-4 {
+    grid-column: span 4;
+}
 
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 22px;
+.span-3 {
+    grid-column: span 3;
+}
 
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+/* =========================================================
+   CIVIC UPDATES
+   ========================================================= */
 
-            animation: issueAppear 0.4s ease;
-        }
+.updates {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 17px;
+}
 
-        @keyframes issueAppear {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
+.update-card {
+    padding: 22px;
+}
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+.update-icon {
+    font-size: 31px;
+    margin-bottom: 12px;
+}
 
-        .issue-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
+.update-card h3 {
+    margin-bottom: 8px;
+}
 
-        .issue-card h3 {
-            margin: 0;
-            font-size: 19px;
-        }
+.update-card p {
+    color: var(--muted);
+    line-height: 1.6;
+}
 
-        .status {
-            padding: 6px 10px;
+/* =========================================================
+   FORMS
+   ========================================================= */
 
-            background: #FFF3CD;
-            color: #795548;
+.form {
+    display: grid;
+    gap: 14px;
+}
 
-            border-radius: 20px;
+.field label {
+    display: block;
 
-            font-size: 12px;
-            font-weight: 700;
+    margin-bottom: 7px;
 
-            white-space: nowrap;
-        }
+    font-size: 13px;
+    font-weight: 800;
+}
 
-        .issue-card p {
-            margin: 12px 0 0;
+.input,
+.textarea,
+.select {
+    width: 100%;
 
-            color: #31566F;
-            line-height: 1.6;
-        }
+    padding: 12px 13px;
 
-        .issue-meta {
-            margin-top: 15px;
+    background: rgba(255,255,255,0.6);
 
-            color: #456A82;
+    color: var(--navy);
 
-            font-size: 13px;
-            line-height: 1.7;
-        }
+    border: 1px solid rgba(11,31,58,0.20);
 
-        .issue-number {
-            font-size: 12px;
-            font-weight: 800;
-            color: #456A82;
-            margin-bottom: 5px;
-        }
+    border-radius: 13px;
 
-        /* =========================
-           REPORT
-        ========================= */
+    outline: none;
+}
 
-        #report {
-            min-height: 80vh;
-        }
+.input:focus,
+.textarea:focus,
+.select:focus {
+    border-color: var(--blue);
 
-        .report-card {
-            width: 100%;
-            max-width: 650px;
-            margin: auto;
+    box-shadow:
+        0 0 0 3px rgba(56,189,248,0.18);
+}
 
-            padding: 30px;
+.textarea {
+    min-height: 130px;
+    resize: vertical;
+}
 
-            background: rgba(255, 255, 255, 0.35);
+.helper {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 5px;
+}
 
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
+/* =========================================================
+   NEWS
+   ========================================================= */
 
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 30px;
+.tabs {
+    display: flex;
+    gap: 8px;
 
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-        }
+    overflow-x: auto;
 
-        .report-icon {
-            font-size: 42px;
-        }
+    padding-bottom: 4px;
 
-        .report-card h2 {
-            margin: 8px 0;
-            font-size: 30px;
-        }
+    margin-bottom: 15px;
+}
 
-        .report-card > p {
-            margin-bottom: 25px;
+.tabs .btn {
+    white-space: nowrap;
+}
 
-            color: #31566F;
-            line-height: 1.6;
-        }
+.tabs .active {
+    background: var(--navy);
+    color: white;
+}
 
-        .report-card label {
-            display: block;
+.news-list {
+    display: grid;
+    gap: 13px;
+}
 
-            margin: 17px 0 7px;
+.news-card {
+    padding: 18px;
+}
 
-            font-size: 14px;
-            font-weight: 700;
-        }
+.news-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
 
-        .report-card input,
-        .report-card textarea,
-        .report-card select {
-            width: 100%;
+.pill {
+    display: inline-flex;
 
-            padding: 13px 15px;
+    width: max-content;
 
-            background: rgba(255, 255, 255, 0.5);
+    padding: 6px 10px;
 
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            border-radius: 14px;
+    border-radius: 999px;
 
-            font-family: inherit;
-            font-size: 14px;
+    background: rgba(255,255,255,0.6);
 
-            outline: none;
-        }
+    border: 1px solid rgba(11,31,58,0.1);
 
-        .report-card input:focus,
-        .report-card textarea:focus,
-        .report-card select:focus {
-            border-color: #42A5F5;
+    font-size: 11px;
+    font-weight: 800;
+}
 
-            box-shadow: 0 0 0 3px rgba(66, 165, 245, 0.15);
-        }
+.news-card h3 {
+    margin: 10px 0 7px;
+}
 
-        .report-card textarea {
-            resize: vertical;
-        }
+.news-card p {
+    color: var(--muted);
+    line-height: 1.6;
+}
 
-        .report-card input::placeholder,
-        .report-card textarea::placeholder {
-            color: #557085;
-        }
+.news-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 
-        .location-btn {
-            width: 100%;
+    margin-top: 13px;
+}
 
-            margin-top: 12px;
-            padding: 12px;
+.news-note {
+    margin-top: 15px;
 
-            border: 1px solid rgba(11, 31, 58, 0.2);
-            border-radius: 14px;
+    font-size: 12px;
 
-            background: rgba(255, 255, 255, 0.4);
-            color: #0B1F3A;
+    color: var(--muted);
+}
 
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 700;
+/* =========================================================
+   ISSUES
+   ========================================================= */
 
-            cursor: pointer;
-        }
+.issue-list {
+    display: grid;
+    gap: 13px;
+}
 
-        .location-btn:hover {
-            background: rgba(255, 255, 255, 0.65);
-        }
+.issue-card {
+    padding: 18px;
+}
 
-        #location-status {
-            margin: 8px 2px 15px;
+.issue-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+}
 
-            color: #36566F;
-            font-size: 12px;
-        }
+.issue-id {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 800;
+}
 
-        .submit-btn {
-            width: 100%;
+.issue-card h3 {
+    margin: 6px 0 9px;
+}
 
-            margin-top: 20px;
-            padding: 14px;
+.issue-card p {
+    color: var(--muted);
+    line-height: 1.6;
+}
 
-            border: none;
-            border-radius: 15px;
+.issue-meta {
+    margin-top: 12px;
 
-            background: #0B1F3A;
-            color: white;
+    color: #456A82;
 
-            font-family: inherit;
-            font-size: 15px;
-            font-weight: 700;
+    font-size: 12px;
+    line-height: 1.8;
+}
 
-            cursor: pointer;
+.status {
+    padding: 6px 10px;
 
-            transition: 0.2s ease;
-        }
+    border-radius: 999px;
 
-        .submit-btn:hover {
-            background: #12345A;
-            transform: translateY(-2px);
-        }
+    background: #FEF3C7;
+    color: #92400E;
 
-        /* =========================
-           ABOUT
-        ========================= */
+    font-size: 11px;
+    font-weight: 800;
 
-        #about,
-        #developer {
-            min-height: 50vh;
-        }
+    white-space: nowrap;
+}
 
-        .about-box {
-            padding: 30px;
+/* =========================================================
+   COMMUNITIES
+   ========================================================= */
 
-            background: rgba(255, 255, 255, 0.35);
+.community-list {
+    display: grid;
+    gap: 13px;
+}
 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+.community-card {
+    padding: 18px;
+}
 
-            border: 1px solid rgba(255, 255, 255, 0.55);
-            border-radius: 28px;
+.community-card h3 {
+    margin-bottom: 6px;
+}
 
-            line-height: 1.8;
+.community-card p {
+    color: var(--muted);
+    line-height: 1.6;
+}
 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.10);
-        }
+.community-header {
+    display: flex;
 
-        .about-box p {
-            margin-top: 0;
-            color: #294D68;
-        }
+    justify-content: space-between;
+    align-items: flex-start;
 
-        .steps {
-            display: grid;
+    gap: 15px;
+}
 
-            grid-template-columns: repeat(4, 1fr);
+.community-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 
-            gap: 15px;
+    margin-top: 13px;
+}
 
-            margin-top: 25px;
-        }
+.event-box {
+    margin-top: 13px;
 
-        .step {
-            padding: 18px;
+    padding: 13px;
 
-            background: rgba(255, 255, 255, 0.3);
+    border-left: 4px solid var(--blue);
 
-            border-radius: 18px;
+    border-radius: 10px;
 
-            text-align: center;
-        }
+    background: rgba(255,255,255,0.30);
 
-        .step strong {
-            display: block;
+    line-height: 1.7;
+}
 
-            margin-bottom: 5px;
+.community-rules {
+    color: var(--muted);
 
-            font-size: 15px;
-        }
+    line-height: 1.7;
 
-        .step span {
-            color: #456A82;
-            font-size: 13px;
-        }
+    font-size: 13px;
+}
 
-        /* =========================
-           STORAGE PANEL
-        ========================= */
+/* =========================================================
+   CHAT
+   ========================================================= */
 
-        .storage-panel {
-            margin-top: 25px;
+.chat-shell {
+    padding: 14px;
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 15px;
-            flex-wrap: wrap;
+    min-height: 620px;
+    min-width: 0;
 
-            padding: 18px;
+    display: grid;
 
-            background: rgba(255, 255, 255, 0.25);
+    grid-template-rows: auto 1fr auto;
+    animation: chat-enter .22s ease-out;
+}
 
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            border-radius: 18px;
-        }
+.chat-header {
+    padding: 8px 5px 15px;
+    min-width: 0;
+}
 
-        .storage-info {
-            font-size: 13px;
-            color: #294D68;
-        }
+.chat-header-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
 
-        .clear-btn {
-            padding: 9px 13px;
+.chat-header-title h2 {
+    font-size: 22px;
+    overflow-wrap: anywhere;
+}
 
-            border: none;
-            border-radius: 10px;
+.messages {
+    overflow-y: auto;
+    min-height: 180px;
+    min-width: 0;
 
-            background: rgba(255, 255, 255, 0.55);
-            color: #0B1F3A;
+    padding: 16px;
 
-            font-family: inherit;
-            font-size: 12px;
-            font-weight: 700;
+    border-radius: 16px;
 
-            cursor: pointer;
-        }
+    background: rgba(5,27,45,0.08);
 
-        .clear-btn:hover {
-            background: white;
-        }
+    display: flex;
+    flex-direction: column;
 
-        /* =========================
-           FOOTER
-        ========================= */
+    gap: 10px;
+}
 
-        footer {
-            padding: 25px 15px;
+.message {
+    max-width: min(75%,600px);
+    min-width: 0;
 
-            background: #0B1F3A;
-            color: white;
+    padding: 10px 12px;
 
-            text-align: center;
-            font-size: 13px;
-        }
+    background: rgba(255,255,255,0.7);
 
-        footer p {
-            margin: 5px 0;
-        }
+    border: 1px solid rgba(11,31,58,0.12);
 
-        /* =========================
-           MOBILE
-        ========================= */
+    border-radius: 15px;
 
-        @media (max-width: 767px) {
+    align-self: flex-start;
 
-            .header {
-                padding: 15px 10px;
-            }
+    overflow-wrap: anywhere;
+    transition: transform .18s ease, outline-color .18s ease, opacity .18s ease;
+    animation: message-enter .18s ease-out;
+}
 
-            .header-inner {
-                flex-direction: column;
-                gap: 12px;
-            }
+.message.mine {
+    align-self: flex-end;
 
-            .logo {
-                font-size: 34px;
-            }
+    background: var(--navy);
 
-            nav {
-                width: 100%;
-                justify-content: center;
-            }
+    color: white;
+}
 
-            nav a {
-                font-size: 13px;
-                padding: 8px 10px;
-            }
+.message-meta {
+    font-size: 10px;
+    overflow-wrap: anywhere;
 
-            section {
-                padding: 55px 15px;
-            }
+    opacity: .7;
 
-            .section-title {
-                font-size: 30px;
-            }
+    margin-bottom: 4px;
+}
 
-            .home-text {
-                font-size: 16px;
-            }
+.message-text {
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
 
-            .updates {
-                grid-template-columns: 1fr;
-            }
+.chat-composer {
+    display: flex;
+    min-width: 0;
 
-            .steps {
-                grid-template-columns: 1fr 1fr;
-            }
+    gap: 8px;
 
-            .report-card {
-                padding: 23px;
-                border-radius: 24px;
-            }
+    padding-top: 10px;
+}
 
-            .report-card h2 {
-                font-size: 26px;
-            }
+.chat-composer .input {
+    flex: 1;
+    min-width: 0;
+}
 
-            .issue-top {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-        }
+.community-members {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+}
 
-        @media (max-width: 400px) {
+.member-chip {
+    max-width: 100%;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.62);
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
 
-            .logo {
-                font-size: 31px;
-            }
+.chat-member-roster {
+    margin-top: 12px;
+    overflow-wrap: anywhere;
+}
 
-            nav a {
-                font-size: 12px;
-                padding: 7px 9px;
-            }
+.chat-tools {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 12px;
+}
 
-            .home-title {
-                font-size: 42px;
-            }
+.selection-status {
+    color: var(--muted);
+    font-size: 12px;
+}
 
-            .steps {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+.message-selection {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 7px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.message-selection input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--blue-dark);
+}
+
+.message.selected {
+    outline: 3px solid var(--blue-dark);
+    transform: scale(.99);
+}
+
+.message.owned-by-other {
+    opacity: .78;
+}
+
+@keyframes chat-enter {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes message-enter {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+.profile-card {
+    padding: 22px;
+}
+
+.profile-head {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+
+    border-radius: 50%;
+
+    background: var(--navy);
+
+    color: white;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 25px;
+    font-weight: 900;
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 5000;
+
+    background: rgba(0,0,0,0.48);
+
+    display: grid;
+
+    place-items: center;
+
+    padding: 18px;
+}
+
+.modal-box {
+    width: min(570px,100%);
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    padding: 22px;
+
+    background: #EAF8FD;
+
+    border: 1px solid white;
+
+    border-radius: 22px;
+
+    box-shadow: 0 25px 80px rgba(0,0,0,.35);
+}
+
+.modal-close {
+    float: right;
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--navy);
+
+    font-size: 25px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast {
+    position: fixed;
+
+    right: 18px;
+    bottom: 18px;
+
+    z-index: 6000;
+
+    padding: 13px 16px;
+
+    background: var(--navy);
+
+    color: white;
+
+    border-radius: 13px;
+
+    box-shadow: var(--shadow);
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+    padding: 30px 18px;
+
+    background: var(--navy);
+
+    color: white;
+
+    text-align: center;
+
+    font-size: 12px;
+}
+
+/* =========================================================
+   MOBILE NAV
+   ========================================================= */
+
+.mobile-nav {
+    display: none;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 950px) {
+
+    .header-inner {
+        flex-direction: column;
+
+        align-items: center;
+
+        padding: 10px 14px;
+    }
+
+    .desktop-nav {
+        justify-content: center;
+    }
+
+    .updates {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .span-8,
+    .span-6,
+    .span-4,
+    .span-3 {
+        grid-column: span 12;
+    }
+
+    section {
+        padding: 52px 16px;
+    }
+}
+
+/* =========================================================
+   PHONE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    body {
+        padding-bottom: 72px;
+    }
+
+    .header {
+        position: sticky;
+    }
+
+    .header-inner {
+        min-height: 60px;
+
+        display: block;
+
+        padding: 9px 12px;
+    }
+
+    .logo {
+        text-align: center;
+
+        font-size: 25px;
+
+        margin-bottom: 8px;
+    }
+
+    .desktop-nav {
+        display: none;
+    }
+
+    section {
+        padding: 42px 13px;
+    }
+
+    .hero {
+        min-height: 72vh;
+    }
+
+    .hero-title {
+        font-size: clamp(40px,13vw,58px);
+
+        letter-spacing: -2px;
+    }
+
+    .hero-description {
+        font-size: 16px;
+    }
+
+    .buttons {
+        width: 100%;
+    }
+
+    .buttons .btn,
+    .buttons a {
+        width: 100%;
+    }
+
+    .updates {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title {
+        font-size: 29px;
+    }
+
+    .card,
+    .update-card,
+    .issue-card,
+    .news-card,
+    .community-card {
+        border-radius: 17px;
+    }
+
+    .issue-top,
+    .community-header {
+        flex-direction: column;
+    }
+
+    .message {
+        max-width: 88%;
+    }
+
+    .chat-shell {
+        min-height: calc(100vh - 185px);
+
+        border-radius: 17px;
+        padding: 10px;
+    }
+
+    .chat-header .between {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .chat-header .between > div {
+        min-width: 0;
+        flex: 1 1 100%;
+    }
+
+    .chat-header .between > .btn {
+        flex: 0 1 auto;
+    }
+
+    .messages {
+        padding: 10px;
+    }
+
+    .message {
+        max-width: 92%;
+    }
+
+    .chat-composer {
+        padding-bottom: 2px;
+    }
+
+    .chat-composer .btn {
+        min-width: 58px;
+        padding: 9px 11px;
+    }
+
+    .mobile-nav {
+        position: fixed;
+
+        display: flex;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        height: 70px;
+
+        z-index: 4000;
+
+        background: rgba(11,31,58,.97);
+
+        backdrop-filter: blur(18px);
+
+        justify-content: space-around;
+
+        padding: 6px 3px env(safe-area-inset-bottom);
+
+        box-shadow: 0 -5px 20px rgba(0,0,0,.25);
+    }
+
+    .mobile-nav a {
+        flex: 1;
+
+        color: #B9D3E3;
+
+        text-decoration: none;
+
+        text-align: center;
+
+        font-size: 10px;
+
+        padding: 5px 2px;
+
+        border-radius: 10px;
+    }
+
+    .mobile-nav a b {
+        display: block;
+
+        font-size: 18px;
+
+        margin-bottom: 2px;
+    }
+
+    .mobile-nav a.active {
+        color: white;
+
+        background: #17405E;
+    }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .mobile-nav a {
+        font-size: 9px;
+    }
+
+    .mobile-nav a b {
+        font-size: 16px;
+    }
+
+    .hero-title {
+        font-size: 38px;
+    }
+}
+
+body.auth-locked {
+    overflow: hidden;
+}
+
+html.auth-locked {
+    overflow: hidden;
+}
+
+body.auth-locked > header,
+body.auth-locked > main:not(#authGate),
+body.auth-locked > footer,
+body.auth-locked > .mobile-nav,
+body.auth-locked > #modal,
+body.auth-locked > #toast {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+#authGate {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: grid;
+    place-items: start center;
+    overflow-y: auto;
+    padding: 20px;
+    color: #f8fafc;
+    background:
+        radial-gradient(circle at 12% 15%, rgba(56,189,248,.2), transparent 30%),
+        radial-gradient(circle at 88% 85%, rgba(2,132,199,.2), transparent 32%),
+        #071a2c;
+    opacity: 1;
+    transition: opacity .28s ease, transform .28s ease;
+}
+
+#authGate[hidden] {
+    display: none;
+}
+
+#authGate.is-leaving {
+    opacity: 0;
+    transform: scale(1.015);
+    pointer-events: none;
+}
+
+.auth-wrap {
+    width: min(460px, 100%);
+    margin: auto;
+    animation: auth-slide-in .7s cubic-bezier(.2,.8,.2,1);
+}
+
+.auth-logo {
+    text-align: center;
+    margin-bottom: 18px;
+    animation: auth-fade-up .65s ease both;
+}
+
+.auth-logo-icon {
+    width: 58px;
+    height: 58px;
+    display: grid;
+    place-items: center;
+    margin: auto;
+    border-radius: 18px;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 900;
+    background: linear-gradient(135deg, #0284c7, #38bdf8);
+    box-shadow: 0 15px 40px rgba(14,165,233,.28);
+    transform: rotate(-5deg);
+}
+
+.auth-logo h1 {
+    margin-top: 12px;
+    color: #fff;
+    font-size: 28px;
+    letter-spacing: -.8px;
+}
+
+.auth-logo p {
+    margin-top: 4px;
+    color: #b5cad9;
+    font-size: 14px;
+}
+
+.auth-card {
+    position: relative;
+    overflow: hidden;
+    padding: 28px;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 26px;
+    background: rgba(10,35,56,.88);
+    box-shadow: 0 30px 80px rgba(0,0,0,.38), inset 0 1px rgba(255,255,255,.08);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+}
+
+.auth-card::before {
+    position: absolute;
+    top: -90px;
+    right: -80px;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: rgba(56,189,248,.09);
+    filter: blur(30px);
+    content: "";
+    pointer-events: none;
+}
+
+.auth-panel {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    animation: auth-screen-in .32s ease both;
+}
+
+.auth-panel[hidden] {
+    display: none;
+}
+
+.auth-title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 850;
+}
+
+.auth-subtitle {
+    margin-top: 7px;
+    color: #b5cad9;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.auth-typing {
+    min-height: 22px;
+    margin-top: 8px;
+    color: #7dd3fc;
+    font-size: 13px;
+}
+
+.auth-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 14px;
+    margin-left: 3px;
+    background: #38bdf8;
+    vertical-align: -2px;
+    animation: auth-blink .8s infinite;
+}
+
+.auth-form {
+    margin-top: 16px;
+}
+
+.auth-field {
+    margin-bottom: 11px;
+}
+
+.auth-field label {
+    display: block;
+    margin-bottom: 7px;
+    color: #d6e3ec;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.auth-input {
+    width: 100%;
+    height: 45px;
+    padding: 0 14px;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 13px;
+    outline: none;
+    background: rgba(2,6,23,.48);
+    color: #fff;
+    font: inherit;
+    font-size: 15px;
+    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+
+.auth-input::placeholder {
+    color: #879bad;
+}
+
+.auth-input:focus {
+    transform: translateY(-1px);
+    border-color: rgba(56,189,248,.8);
+    box-shadow: 0 0 0 4px rgba(56,189,248,.1);
+}
+
+.auth-phone-row {
+    display: flex;
+    gap: 8px;
+}
+
+.auth-country {
+    display: grid;
+    width: 76px;
+    flex: 0 0 76px;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 13px;
+    background: rgba(2,6,23,.48);
+    color: #d6e3ec;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.auth-location-box {
+    margin: 4px 0 11px;
+    padding: 12px;
+    border: 1px solid rgba(56,189,248,.16);
+    border-radius: 16px;
+    background: rgba(14,165,233,.06);
+}
+
+.auth-location-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.auth-location-title {
+    color: #f1f7fa;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.auth-optional {
+    margin-top: 3px;
+    color: #9fb2c1;
+    font-size: 11px;
+}
+
+.auth-location-status {
+    margin-top: 9px;
+    color: #b5cad9;
+    font-size: 12px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+.auth-location-status.success {
+    color: #86efac;
+}
+
+.auth-location-status.error {
+    color: #fda4af;
+}
+
+.auth-location-button {
+    min-height: 40px;
+    padding: 8px 11px;
+    border: 1px solid rgba(56,189,248,.24);
+    border-radius: 11px;
+    background: rgba(14,165,233,.14);
+    color: white;
+    font-weight: 750;
+    cursor: pointer;
+    transition: transform .18s ease, background .18s ease;
+}
+
+.auth-location-button:hover {
+    transform: translateY(-2px);
+    background: rgba(14,165,233,.25);
+}
+
+.auth-primary,
+.auth-secondary {
+    width: 100%;
+    min-height: 49px;
+    border-radius: 14px;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+
+.auth-primary {
+    margin-top: 4px;
+    border: 0;
+    background: linear-gradient(135deg, #0284c7, #38bdf8);
+    color: #fff;
+    box-shadow: 0 12px 28px rgba(14,165,233,.2);
+}
+
+.auth-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 17px 36px rgba(14,165,233,.3);
+}
+
+.auth-primary:active,
+.auth-secondary:active,
+.auth-location-button:active {
+    transform: scale(.98);
+}
+
+.auth-secondary {
+    margin-top: 10px;
+    border: 1px solid rgba(255,255,255,.13);
+    background: rgba(255,255,255,.04);
+    color: #d6e3ec;
+}
+
+.auth-secondary:hover {
+    background: rgba(255,255,255,.09);
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 19px 0 4px;
+    color: #91a7b8;
+    font-size: 10px;
+    letter-spacing: .08em;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    height: 1px;
+    flex: 1;
+    background: rgba(255,255,255,.12);
+    content: "";
+}
+
+.auth-message {
+    min-height: 20px;
+    margin-top: 10px;
+    color: #fda4af;
+    font-size: 13px;
+    text-align: center;
+}
+
+.auth-message.is-error {
+    animation: auth-error .32s ease;
+}
+
+.auth-message.is-success {
+    color: #86efac;
+}
+
+.auth-notice {
+    margin-top: 14px;
+    color: #91a7b8;
+    font-size: 11px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+@keyframes auth-slide-in {
+    from { opacity: 0; transform: translateX(-35px) scale(.97); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes auth-screen-in {
+    from { opacity: 0; transform: translateX(16px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes auth-fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes auth-blink {
+    50% { opacity: 0; }
+}
+
+@keyframes auth-error {
+    20%, 60% { transform: translateX(-4px); }
+    40%, 80% { transform: translateX(4px); }
+}
+
+@media (max-width: 520px) {
+    #authGate {
+        align-items: start;
+        padding: 18px 14px;
+    }
+
+    .auth-card {
+        padding: 20px 17px;
+        border-radius: 22px;
+    }
+
+    .auth-title {
+        font-size: 22px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #authGate,
+    #authGate *,
+    #authGate *::before,
+    #authGate *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- =========================
-         HEADER
-    ========================= -->
-
-    <header class="header">
-
-        <div class="header-inner">
-
-            <h1 class="logo">
-                <span class="C">C</span>ivic<span class="L">L</span>ink
-            </h1>
-
-            <nav>
-
-                <a href="#home">Home</a>
-
-                <a href="#issues">Issues</a>
-
-                <a href="#about">About</a>
-
-                <a href="#developer">Developer</a>
-
-                <a href="#report" class="nav-report">
-                    Report Issue
-                </a>
-
-            </nav>
-
+<div id="authGate" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="auth-wrap">
+        <div class="auth-logo">
+            <div class="auth-logo-icon" aria-hidden="true">C</div>
+            <h1>CivicLink</h1>
+            <p>Connect. Speak. Make your community better.</p>
         </div>
 
-    </header>
+        <div class="auth-card">
+            <section id="signupPanel" class="auth-panel" aria-labelledby="authTitle">
+                <h2 class="auth-title" id="authTitle">Create your account</h2>
+                <p class="auth-subtitle">Join your neighbors and make your community better.</p>
+                <div class="auth-typing"><span id="authTyping"></span><span class="auth-cursor" aria-hidden="true"></span></div>
 
+                <form id="authSignupForm" class="auth-form">
+                    <div class="auth-field">
+                        <label for="authName">Full name</label>
+                        <input id="authName" class="auth-input" type="text" autocomplete="name" maxlength="60" required>
+                    </div>
+                    <div class="auth-field">
+                        <label for="authPhone">Phone number</label>
+                        <div class="auth-phone-row">
+                            <span class="auth-country" aria-label="India country code">🇮🇳 +91</span>
+                            <input id="authPhone" class="auth-input" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="14" placeholder="10-digit mobile number" required>
+                        </div>
+                    </div>
+                    <div class="auth-field">
+                        <label for="authState">State / location</label>
+                        <input id="authState" class="auth-input" type="text" autocomplete="address-level1" maxlength="80" placeholder="e.g. Andhra Pradesh" required>
+                    </div>
+                    <div class="auth-location-box">
+                        <div class="auth-location-top">
+                            <div>
+                                <div class="auth-location-title">Current location (Optional)</div>
+                                <div class="auth-optional">Only requested when you press the button</div>
+                            </div>
+                            <button id="authLocationButton" class="auth-location-button" type="button">Add location</button>
+                        </div>
+                        <div id="authLocationStatus" class="auth-location-status" aria-live="polite">You can skip this and enter your state above.</div>
+                    </div>
+                    <button class="auth-primary" type="submit">Create Account</button>
+                    <div id="authSignupMessage" class="auth-message" role="status" aria-live="polite"></div>
+                </form>
+                <div id="authSwitchToLogin">
+                    <div class="auth-divider">ALREADY HAVE AN ACCOUNT?</div>
+                    <button id="authShowLogin" class="auth-secondary" type="button">Log in instead</button>
+                </div>
+                <p class="auth-notice">Local prototype: account details are stored in this browser only and are not protected by a server.</p>
+            </section>
 
-    <!-- =========================
-         HOME
-    ========================= -->
-
-    <section id="home">
-
-        <div class="home-badge">
-            🇮🇳 Building Better Communities
+            <section id="loginPanel" class="auth-panel" aria-labelledby="loginTitle" hidden>
+                <h2 class="auth-title" id="loginTitle">Welcome back</h2>
+                <p class="auth-subtitle">Log in to continue to your CivicLink community.</p>
+                <div class="auth-typing"><span id="loginTyping"></span><span class="auth-cursor" aria-hidden="true"></span></div>
+                <form id="authLoginForm" class="auth-form">
+                    <div class="auth-field">
+                        <label for="authLoginPhone">Phone number</label>
+                        <div class="auth-phone-row">
+                            <span class="auth-country" aria-label="India country code">🇮🇳 +91</span>
+                            <input id="authLoginPhone" class="auth-input" type="tel" inputmode="numeric" autocomplete="tel" maxlength="14" placeholder="10-digit mobile number" required>
+                        </div>
+                    </div>
+                    <button class="auth-primary" type="submit">Continue</button>
+                    <div id="authLoginMessage" class="auth-message" role="status" aria-live="polite"></div>
+                </form>
+                <div id="authSwitchToSignup">
+                    <div class="auth-divider">NEW TO CIVICLINK?</div>
+                    <button id="authShowSignup" class="auth-secondary" type="button">Create an account</button>
+                </div>
+                <p class="auth-notice">This local prototype checks the phone number saved in this browser. It does not send an SMS or verify identity.</p>
+            </section>
         </div>
+    </div>
+</div>
 
-        <h2 class="home-title">
-            Know your community.<br>
-            <span>Make it better.</span>
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <h1 class="logo">
+            <span class="logo-c">C</span>ivic<span class="logo-l">L</span>ink
+        </h1>
+
+        <nav class="desktop-nav">
+
+            <a href="#home">Home</a>
+
+            <a href="#news">News</a>
+
+            <a href="#issues">Issues</a>
+
+            <a href="#communities">Communities</a>
+
+            <a href="#about">About</a>
+
+            <a href="#settings" onclick="openProfile(); return false">
+                Settings
+            </a>
+
+            <a href="#report" class="report-link">
+                Report Issue
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main>
+
+<!-- =======================================================
+     HOME
+======================================================= -->
+
+<section id="home" class="hero">
+
+    <div class="badge">
+        🇮🇳 Building Better Communities
+    </div>
+
+    <h2 class="hero-title">
+        Know your community.<br>
+        <span>Make it better.</span>
+    </h2>
+
+    <p class="hero-description">
+        CivicLink is a civic technology platform for reporting
+        public issues, understanding civic news, and connecting
+        people through responsible civic communities.
+    </p>
+
+    <div class="buttons">
+
+        <a class="btn btn-primary" href="#issues">
+            Explore Issues →
+        </a>
+
+        <a class="btn btn-blue" href="#report">
+            Report a Problem
+        </a>
+
+        <a class="btn" href="#communities">
+            Communities
+        </a>
+
+    </div>
+
+    <div style="margin-top:55px">
+
+        <h2 class="section-title">
+            Civic Updates
         </h2>
 
-        <p class="home-text">
-            CivicLink is a community-focused platform designed
-            to keep people informed about civic issues, encourage
-            responsible reporting and connect problems with
-            people who can help solve them.
+        <p class="section-subtitle">
+            Awareness, reporting and community participation
+            in one place.
         </p>
 
-        <div class="home-buttons">
+        <div class="updates">
 
-            <a href="#issues" class="primary-btn">
-                Explore Issues →
-            </a>
+            <div class="update-card">
 
-            <a href="#report" class="secondary-btn">
-                Report a Problem
-            </a>
-
-        </div>
-
-
-        <!-- CIVIC UPDATES -->
-
-        <div style="margin-top:60px;">
-
-            <h2 class="section-title">
-                Civic Updates
-            </h2>
-
-            <p class="section-subtitle">
-                Learn about civic activities, community improvements
-                and important public issues happening around us.
-            </p>
-
-            <div class="updates">
-
-                <div class="update-card">
-
-                    <div class="update-icon">
-                        🏙️
-                    </div>
-
-                    <h3>
-                        Local Development
-                    </h3>
-
-                    <p>
-                        Civic development projects can improve
-                        roads, public spaces, sanitation and
-                        essential services in communities.
-                    </p>
-
+                <div class="update-icon">
+                    🏙️
                 </div>
 
-                <div class="update-card">
+                <h3>
+                    Local Development
+                </h3>
 
-                    <div class="update-icon">
-                        🧹
-                    </div>
+                <p>
+                    Track problems and improvements affecting
+                    public spaces and essential services.
+                </p>
 
-                    <h3>
-                        Cleaner Communities
-                    </h3>
+            </div>
 
-                    <p>
-                        Responsible waste management and clean
-                        public spaces help create healthier and
-                        safer neighbourhoods.
-                    </p>
 
+            <div class="update-card">
+
+                <div class="update-icon">
+                    🧹
                 </div>
 
-                <div class="update-card">
+                <h3>
+                    Cleaner Communities
+                </h3>
 
-                    <div class="update-icon">
-                        💡
-                    </div>
+                <p>
+                    Report waste and cleanliness concerns with
+                    useful location details.
+                </p>
 
-                    <h3>
-                        Community Awareness
-                    </h3>
+            </div>
 
-                    <p>
-                        Knowing what is happening around us helps
-                        citizens understand problems and take
-                        responsible action.
-                    </p>
 
+            <div class="update-card">
+
+                <div class="update-icon">
+                    💡
                 </div>
+
+                <h3>
+                    Civic Awareness
+                </h3>
+
+                <p>
+                    Understand what is happening around you
+                    and participate responsibly.
+                </p>
 
             </div>
 
         </div>
 
-    </section>
+    </div>
+
+</section>
 
 
-    <!-- =========================
-         ISSUES
-    ========================= -->
+<!-- =======================================================
+     NEWS
+======================================================= -->
 
-    <section id="issues">
+<section id="news">
 
-        <h2 class="section-title">
-            Civic Issues
+    <h2 class="section-title">
+        Civic News
+    </h2>
+
+    <p class="section-subtitle">
+        Four levels so citizens can separate nearby updates
+        from wider developments.
+    </p>
+
+
+    <div class="card">
+
+        <div class="tabs" id="newsTabs"></div>
+
+        <div class="news-list" id="newsList"></div>
+
+        <p class="news-note">
+            Live production news should come from trusted,
+            verified news sources. Civic AI can summarize
+            source material but should not invent facts.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     ISSUES
+======================================================= -->
+
+<section id="issues">
+
+    <h2 class="section-title">
+        Civic Issues
+    </h2>
+
+    <p class="section-subtitle">
+        View civic problems submitted through CivicLink.
+    </p>
+
+    <div id="issuesList" class="issue-list"></div>
+
+</section>
+
+
+<!-- =======================================================
+     REPORT ISSUE
+======================================================= -->
+
+<section id="report">
+
+    <div class="card" style="max-width:760px;margin:auto">
+
+        <div style="font-size:35px;margin-bottom:8px">
+            📢
+        </div>
+
+        <h2 class="section-title" style="font-size:30px">
+            Report an Issue
         </h2>
 
         <p class="section-subtitle">
-            See issues reported on this browser and follow
-            the progress of problems in the community.
+            Provide useful information so the issue can
+            be properly understood.
         </p>
 
-        <div id="issues-list" class="issues-list">
 
-            <div id="empty-issues" class="empty-issues">
+        <form id="reportForm" class="form">
+
+            <div class="field">
+
+                <label>
+                    Issue title
+                </label>
+
+                <input
+                    class="input"
+                    id="subject"
+                    maxlength="100"
+                    required
+                    placeholder="Example: Streetlight not working"
+                >
+
+            </div>
+
+
+            <div class="grid">
+
+                <div class="span-6 field">
+
+                    <label>
+                        Category
+                    </label>
+
+                    <select
+                        class="select"
+                        id="category"
+                        required
+                    >
+
+                        <option value="">
+                            Select category
+                        </option>
+
+                        <option>
+                            Roads & Potholes
+                        </option>
+
+                        <option>
+                            Streetlights
+                        </option>
+
+                        <option>
+                            Waste & Cleanliness
+                        </option>
+
+                        <option>
+                            Water Supply
+                        </option>
+
+                        <option>
+                            Public Safety
+                        </option>
+
+                        <option>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="span-6 field">
+
+                    <label>
+                        Phone number
+                        <span class="muted">
+                            (optional)
+                        </span>
+                    </label>
+
+                    <input
+                        class="input"
+                        id="phone"
+                        type="tel"
+                        inputmode="tel"
+                        autocomplete="tel"
+                        placeholder="+91 XXXXX XXXXX"
+                    >
+
+                    <div class="helper">
+                        Your number is private and is not
+                        displayed publicly.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Address / Location
+                </label>
+
+                <input
+                    class="input"
+                    id="address"
+                    maxlength="250"
+                    required
+                    placeholder="Area, landmark or address"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    class="textarea"
+                    id="complaint"
+                    maxlength="2000"
+                    required
+                    placeholder="Describe the problem..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Evidence photo
+                    <span class="muted">
+                        (optional)
+                    </span>
+                </label>
+
+                <input
+                    class="input"
+                    id="evidence"
+                    type="file"
+                    accept="image/*"
+                >
+
+            </div>
+
+
+            <button
+                class="btn btn-primary"
+                type="submit"
+            >
+                Submit Complaint →
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     COMMUNITIES
+======================================================= -->
+
+<section id="communities">
+
+    <h2 class="section-title">
+        Civic Communities
+    </h2>
+
+    <p class="section-subtitle">
+        Follow civic groups, view public announcements,
+        and participate in community discussions.
+    </p>
+
+    <div id="communityView"></div>
+
+</section>
+
+
+<!-- =======================================================
+     ABOUT
+======================================================= -->
+
+<section id="about">
+
+    <h2 class="section-title">
+        About CivicLink
+    </h2>
+
+    <p class="section-subtitle">
+        Make civic information easier to understand
+        and civic problems easier to report.
+    </p>
+
+
+    <div class="card">
+
+        <p style="line-height:1.75">
+            <strong>CivicLink</strong> is designed to connect
+            citizens with information about civic issues
+            around them.
+        </p>
+
+        <p style="line-height:1.75;margin-top:12px">
+            The platform can begin at the district level,
+            expand across Andhra Pradesh, and eventually
+            serve communities across India.
+        </p>
+
+        <div class="updates" style="margin-top:20px">
+
+            <div class="update-card">
+                <h3>1. Report</h3>
+                <p>
+                    Submit a civic problem.
+                </p>
+            </div>
+
+            <div class="update-card">
+                <h3>2. Connect</h3>
+                <p>
+                    Join civic communities.
+                </p>
+            </div>
+
+            <div class="update-card">
+                <h3>3. Participate</h3>
+                <p>
+                    Stay informed and involved.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer>
+
+    <p>
+        <strong>CivicLink © 2026</strong>
+    </p>
+
+    <p style="margin-top:7px">
+        Built for better, safer and smarter communities.
+    </p>
+
+</footer>
+
+
+<!-- MOBILE NAVIGATION -->
+
+<nav class="mobile-nav" id="mobileNav">
+
+    <a href="#home">
+        <b>⌂</b>
+        Home
+    </a>
+
+    <a href="#news">
+        <b>◈</b>
+        News
+    </a>
+
+    <a href="#issues">
+        <b>▣</b>
+        Issues
+    </a>
+
+    <a href="#communities">
+        <b>♧</b>
+        Groups
+    </a>
+
+    <a href="#report">
+        <b>＋</b>
+        Report
+    </a>
+
+    <a href="#settings" onclick="openProfile(); return false">
+        <b>⚙</b>
+        Settings
+    </a>
+
+</nav>
+
+
+<!-- MODAL -->
+
+<div id="modal"></div>
+
+<!-- TOAST -->
+
+<div id="toast" class="toast" hidden></div>
+
+
+<script>
+
+/* =========================================================
+   CIVICLINK JAVASCRIPT
+   ========================================================= */
+
+
+/* ---------------------------------------------------------
+   STORAGE
+--------------------------------------------------------- */
+
+const KEYS = {
+
+    issues: "civicLinkIssuesV3",
+
+    communities: "civicLinkCommunitiesV3",
+
+    messages: "civicLinkMessagesV3",
+
+    user: "civicLinkUserV3",
+
+    auth: "civicLinkAuthV1"
+
+};
+
+
+/* ---------------------------------------------------------
+   NEWS DATA
+--------------------------------------------------------- */
+
+const NEWS = {
+
+    district: [
+
+        {
+            title: "Road maintenance updates",
+            description:
+                "Local infrastructure work and public-service updates for district residents.",
+            source: "District Civic Desk"
+        },
+
+        {
+            title: "Waste collection awareness",
+            description:
+                "Residents can report missed collection and cleanliness concerns through CivicLink.",
+            source: "Civic Desk"
+        },
+
+        {
+            title: "Public-space improvement updates",
+            description:
+                "Track updates involving roads, public spaces and essential local services.",
+            source: "District Desk"
+        }
+
+    ],
+
+
+    state: [
+
+        {
+            title: "Andhra Pradesh civic updates",
+            description:
+                "State-level developments affecting infrastructure and public services.",
+            source: "State Civic Desk"
+        },
+
+        {
+            title: "Digital public services",
+            description:
+                "A roundup of citizen-facing service improvements and digital access.",
+            source: "State Desk"
+        }
+
+    ],
+
+
+    national: [
+
+        {
+            title: "India civic technology roundup",
+            description:
+                "Developments in digital public services and citizen participation.",
+            source: "National Desk"
+        },
+
+        {
+            title: "Infrastructure and public services",
+            description:
+                "National developments relevant to roads, transport, sanitation and governance.",
+            source: "National Desk"
+        }
+
+    ],
+
+
+    international: [
+
+        {
+            title: "Global civic technology",
+            description:
+                "Cities worldwide are experimenting with technology for public participation.",
+            source: "World Desk"
+        },
+
+        {
+            title: "International civic innovation",
+            description:
+                "Examples of digital tools that help citizens access public information.",
+            source: "World Desk"
+        }
+
+    ]
+
+};
+
+
+let currentNews = "district";
+
+let activeCommunity = null;
+let selectionMode = false;
+let selectedMessageIds = new Set();
+let sendingMessage = false;
+
+
+/* ---------------------------------------------------------
+   HELPERS
+--------------------------------------------------------- */
+
+function load(key, fallback) {
+
+    try {
+
+        const value = localStorage.getItem(key);
+
+        return value === null
+            ? fallback
+            : JSON.parse(value);
+
+    } catch {
+
+        return fallback;
+
+    }
+
+}
+
+
+function save(key, value) {
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(value)
+    );
+
+}
+
+
+function createId(prefix) {
+
+    if (window.crypto && crypto.randomUUID) {
+
+        return prefix + "_" +
+            crypto.randomUUID();
+
+    }
+
+    return prefix + "_" +
+        Date.now() +
+        Math.random().toString(16).slice(2);
+
+}
+
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/[&<>"']/g, char => ({
+
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#39;"
+
+        }[char]));
+
+}
+
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.hidden = false;
+
+    setTimeout(() => {
+
+        toast.hidden = true;
+
+    }, 2600);
+
+}
+
+
+/* ---------------------------------------------------------
+   USERNAME
+--------------------------------------------------------- */
+
+function getUser() {
+
+    const legacyUser = load(KEYS.user, null);
+    const authUser = loadAuthAccount();
+
+    if (authUser) {
+        const user = {
+            id: authUser.id,
+            username: legacyUser && legacyUser.id === authUser.id
+                ? legacyUser.username
+                : createUsername(authUser.name, authUser.id),
+            name: authUser.name,
+            createdAt: authUser.createdAt
+        };
+
+        save(KEYS.user, user);
+        return user;
+    }
+
+    return legacyUser || {
+        id: createId("user"),
+        username: "citizen_" + Math.floor(1000 + Math.random() * 9000),
+        name: "Civic Citizen",
+        createdAt: Date.now()
+    };
+
+}
+
+
+let currentUser = getUser();
+let authLocation = null;
+let authTypingTimer = null;
+
+
+function createUsername(name, id) {
+    const base = String(name || "citizen")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "")
+        .slice(0, 16) || "citizen";
+    const suffix = String(id || "").replace(/[^a-z0-9]/gi, "").slice(-5);
+    return `${base}_${suffix || "member"}`.slice(0, 24);
+}
+
+
+function normalizePhone(value) {
+    let digits = String(value || "").replace(/\D/g, "");
+    if (digits.length === 12 && digits.startsWith("91")) {
+        digits = digits.slice(2);
+    }
+    return digits;
+}
+
+
+function loadAuthAccount() {
+    const current = load(KEYS.auth, null);
+    if (current) return current;
+
+    const older = load("civicLinkAuthUserV1", null);
+    if (
+        !older ||
+        typeof older.id !== "string" ||
+        typeof older.name !== "string" ||
+        typeof older.phone !== "string"
+    ) {
+        return null;
+    }
+
+    const migrated = {
+        id: load(KEYS.user, null)?.id || older.id,
+        name: older.name,
+        phone: normalizePhone(older.phone),
+        state: typeof older.state === "string" ? older.state : "",
+        location: older.location || null,
+        createdAt: older.createdAt || new Date().toISOString()
+    };
+    save(KEYS.auth, migrated);
+    return migrated;
+}
+
+
+function setAuthMessage(element, text, type) {
+    element.textContent = text;
+    element.className = `auth-message${type ? ` is-${type}` : ""}`;
+    if (type === "error") {
+        element.classList.remove("is-error");
+        void element.offsetWidth;
+        element.classList.add("is-error");
+    }
+}
+
+
+function typeAuthText(element, text) {
+    clearInterval(authTypingTimer);
+    element.textContent = "";
+    let index = 0;
+    authTypingTimer = setInterval(() => {
+        element.textContent += text[index];
+        index += 1;
+        if (index >= text.length) {
+            clearInterval(authTypingTimer);
+            authTypingTimer = null;
+        }
+    }, 28);
+}
+
+
+function setAuthMode(mode) {
+    const signup = document.getElementById("signupPanel");
+    const login = document.getElementById("loginPanel");
+    const account = loadAuthAccount();
+    const showSignup = mode === "signup" && !account;
+
+    signup.hidden = !showSignup;
+    login.hidden = showSignup;
+    document.getElementById("authSwitchToLogin").hidden = !!account;
+    document.getElementById("authSwitchToSignup").hidden = !!account;
+
+    if (showSignup) {
+        typeAuthText(
+            document.getElementById("authTyping"),
+            "One account. Your community. Your voice."
+        );
+        setTimeout(() => document.getElementById("authName").focus(), 100);
+    } else {
+        typeAuthText(
+            document.getElementById("loginTyping"),
+            "Good to see you again."
+        );
+        setTimeout(() => document.getElementById("authLoginPhone").focus(), 100);
+    }
+}
+
+
+function finishAuthentication(user) {
+    currentUser = {
+        id: user.id,
+        username: createUsername(user.name, user.id),
+        name: user.name,
+        createdAt: user.createdAt
+    };
+
+    const legacyUser = load(KEYS.user, null);
+    if (legacyUser && legacyUser.id === user.id && legacyUser.username) {
+        currentUser.username = legacyUser.username;
+    }
+    save(KEYS.user, currentUser);
+
+    const gate = document.getElementById("authGate");
+    let completed = false;
+    const completeTransition = () => {
+        if (completed) return;
+        completed = true;
+        gate.removeEventListener("transitionend", onTransitionEnd);
+        gate.hidden = true;
+        gate.classList.remove("is-leaving");
+        document.body.classList.remove("auth-locked");
+        document.documentElement.classList.remove("auth-locked");
+        document.querySelector("main:not(#authGate)")?.setAttribute("aria-hidden", "false");
+        if (location.hash !== "#home") {
+            location.hash = "#home";
+        }
+        document.getElementById("home").scrollIntoView({ behavior: "smooth" });
+        updateMobileNav();
+    };
+    const onTransitionEnd = event => {
+        if (event.target === gate && event.propertyName === "opacity") {
+            gate.removeEventListener("transitionend", onTransitionEnd);
+            completeTransition();
+        }
+    };
+    gate.addEventListener("transitionend", onTransitionEnd);
+    gate.classList.add("is-leaving");
+    setTimeout(completeTransition, 350);
+}
+
+
+function showAuthentication(mode) {
+    const gate = document.getElementById("authGate");
+    gate.hidden = false;
+    gate.classList.remove("is-leaving");
+    document.body.classList.add("auth-locked");
+    document.documentElement.classList.add("auth-locked");
+    document.querySelector("main:not(#authGate)")?.setAttribute("aria-hidden", "true");
+    document.getElementById("authSignupForm").reset();
+    document.getElementById("authLoginForm").reset();
+    authLocation = null;
+    document.getElementById("authLocationStatus").textContent =
+        "You can skip this and enter your state above.";
+    document.getElementById("authLocationStatus").className = "auth-location-status";
+    setAuthMessage(document.getElementById("authSignupMessage"), "", "");
+    setAuthMessage(document.getElementById("authLoginMessage"), "", "");
+    setAuthMode(mode);
+}
+
+
+function requestCurrentLocation(button, status, onSuccess) {
+    if (!navigator.geolocation) {
+        status.textContent = "Location isn't supported here. You can enter your state manually.";
+        status.className = "auth-location-status error";
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Requesting…";
+    status.textContent = "Waiting for your location permission…";
+    status.className = "auth-location-status";
+
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            const coordinates = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude
+            };
+            onSuccess(coordinates);
+            button.disabled = false;
+            button.textContent = "✓ Added";
+            status.textContent =
+                `Location saved (${coordinates.latitude.toFixed(4)}, ${coordinates.longitude.toFixed(4)}).`;
+            status.className = "auth-location-status success";
+        },
+        error => {
+            button.disabled = false;
+            button.textContent = "Add location";
+            status.textContent = error.code === 1
+                ? "Location permission was denied. No problem — enter your state manually."
+                : "Couldn't detect your location. You can enter your state manually.";
+            status.className = "auth-location-status error";
+        },
+        { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+    );
+}
+
+
+function initializeAuthentication() {
+    const account = loadAuthAccount();
+    if (location.hash) {
+        history.replaceState(null, "", location.href.split("#")[0]);
+    }
+    window.scrollTo(0, 0);
+    document.body.classList.add("auth-locked");
+    document.documentElement.classList.add("auth-locked");
+    document.querySelector("main:not(#authGate)")?.setAttribute("aria-hidden", "true");
+    setAuthMode(account ? "login" : "signup");
+
+    if (account) {
+        document.getElementById("authSwitchToLogin").hidden = true;
+        document.getElementById("authSwitchToSignup").hidden = true;
+    }
+
+    document.getElementById("authShowLogin").addEventListener("click", () =>
+        setAuthMode("login")
+    );
+    document.getElementById("authShowSignup").addEventListener("click", () =>
+        setAuthMode("signup")
+    );
+
+    document.getElementById("authLocationButton").addEventListener("click", event => {
+        requestCurrentLocation(
+            event.currentTarget,
+            document.getElementById("authLocationStatus"),
+            coordinates => { authLocation = coordinates; }
+        );
+    });
+
+    document.getElementById("authSignupForm").addEventListener("submit", event => {
+        event.preventDefault();
+        const name = document.getElementById("authName").value.trim();
+        const phone = normalizePhone(document.getElementById("authPhone").value);
+        const state = document.getElementById("authState").value.trim();
+        const message = document.getElementById("authSignupMessage");
+
+        setAuthMessage(message, "", "");
+        if (name.length < 2) {
+            setAuthMessage(message, "Please enter your full name (at least 2 characters).", "error");
+            return;
+        }
+        if (!/^\d{10}$/.test(phone)) {
+            setAuthMessage(message, "Enter a valid 10-digit phone number.", "error");
+            return;
+        }
+        if (state.length < 2) {
+            setAuthMessage(message, "Please enter your state or location.", "error");
+            return;
+        }
+        if (loadAuthAccount()) {
+            setAuthMode("login");
+            setAuthMessage(
+                document.getElementById("authLoginMessage"),
+                "An account already exists in this browser. Please log in.",
+                "error"
+            );
+            return;
+        }
+
+        const previousUser = load(KEYS.user, null);
+        const now = new Date().toISOString();
+        const user = {
+            id: previousUser && previousUser.id
+                ? previousUser.id
+                : createId("user"),
+            name,
+            phone,
+            state,
+            location: authLocation,
+            createdAt: now
+        };
+
+        try {
+            save(KEYS.auth, user);
+            finishAuthentication(user);
+        } catch (error) {
+            setAuthMessage(message, "Couldn't save your account in this browser. Check available storage and try again.", "error");
+        }
+    });
+
+    document.getElementById("authLoginForm").addEventListener("submit", event => {
+        event.preventDefault();
+        const phone = normalizePhone(document.getElementById("authLoginPhone").value);
+        const message = document.getElementById("authLoginMessage");
+        const account = loadAuthAccount();
+        setAuthMessage(message, "", "");
+
+        if (!/^\d{10}$/.test(phone)) {
+            setAuthMessage(message, "Enter a valid 10-digit phone number.", "error");
+            return;
+        }
+        if (!account || normalizePhone(account.phone) !== phone) {
+            setAuthMessage(message, "We couldn't find an account with that phone number. Check it and try again.", "error");
+            return;
+        }
+
+        finishAuthentication(account);
+    });
+}
+
+
+/* ---------------------------------------------------------
+   MODAL
+--------------------------------------------------------- */
+
+function openModal(content) {
+
+    document.getElementById("modal").innerHTML = `
+
+        <div
+            class="modal"
+            onclick="
+                if(event.target === this)
+                    closeModal()
+            "
+        >
+
+            <div class="modal-box">
+
+                <button
+                    class="modal-close"
+                    onclick="closeModal()"
+                >
+                    ×
+                </button>
+
+                ${content}
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function closeModal() {
+
+    document.getElementById("modal")
+        .innerHTML = "";
+
+}
+
+
+/* =========================================================
+   NEWS
+========================================================= */
+
+function renderNews() {
+
+    const tabs =
+        document.getElementById("newsTabs");
+
+    const list =
+        document.getElementById("newsList");
+
+
+    const levels = [
+
+        ["district","🏙️ District"],
+
+        ["state","🇮🇳 State"],
+
+        ["national","🇮🇳 National"],
+
+        ["international","🌍 International"]
+
+    ];
+
+
+    tabs.innerHTML =
+        levels.map(level => `
+
+            <button
+                class="btn ${
+                    currentNews === level[0]
+                        ? "active"
+                        : ""
+                }"
+                onclick="
+                    currentNews='${level[0]}';
+                    renderNews()
+                "
+            >
+                ${level[1]}
+            </button>
+
+        `).join("");
+
+
+    list.innerHTML =
+        NEWS[currentNews]
+            .map(article => `
+
+                <article class="news-card">
+
+                    <div class="news-top">
+
+                        <span class="pill">
+                            ${escapeHTML(article.source)}
+                        </span>
+
+                        <span class="small muted">
+                            Today
+                        </span>
+
+                    </div>
+
+
+                    <h3>
+                        ${escapeHTML(article.title)}
+                    </h3>
+
+
+                    <p>
+                        ${escapeHTML(article.description)}
+                    </p>
+
+
+                    <div class="news-actions">
+
+                        <button
+                            class="btn btn-primary"
+                            onclick="
+                                civicAI(
+                                    '${encodeURIComponent(article.title)}'
+                                )
+                            "
+                        >
+                            🤖 Civic AI
+                        </button>
+
+                        <button
+                            class="btn"
+                            onclick="
+                                showToast(
+                                    'Article source will be connected through the news API.'
+                                )
+                            "
+                        >
+                            View Source
+                        </button>
+
+                    </div>
+
+                </article>
+
+            `).join("");
+
+}
+
+
+/* ---------------------------------------------------------
+   CIVIC AI
+--------------------------------------------------------- */
+
+function civicAI(encodedTitle) {
+
+    const title =
+        decodeURIComponent(encodedTitle);
+
+
+    openModal(`
+
+        <h2>
+            🤖 Civic AI
+        </h2>
+
+        <p style="margin-top:15px">
+
+            <strong>
+                ${escapeHTML(title)}
+            </strong>
+
+        </p>
+
+        <p
+            class="muted"
+            style="line-height:1.7;margin-top:12px"
+        >
+
+            In the production version, Civic AI will
+            receive verified article content and provide:
+
+        </p>
+
+        <ul
+            style="
+                margin:12px 0 20px 20px;
+                line-height:1.8;
+            "
+        >
+
+            <li>Simple summary</li>
+
+            <li>Important facts</li>
+
+            <li>Why it matters to citizens</li>
+
+            <li>Possible civic impact</li>
+
+        </ul>
+
+        <p class="small muted">
+
+            AI summaries will be clearly labelled and
+            should not replace the original source.
+
+        </p>
+
+        <button
+            class="btn btn-primary"
+            onclick="closeModal()"
+            style="margin-top:15px"
+        >
+            Done
+        </button>
+
+    `);
+
+}
+
+
+/* =========================================================
+   REPORTS
+========================================================= */
+
+document
+    .getElementById("reportForm")
+    .addEventListener("submit", submitReport);
+
+
+function submitReport(event) {
+
+    event.preventDefault();
+
+
+    const subject =
+        document
+            .getElementById("subject")
+            .value
+            .trim();
+
+
+    const category =
+        document
+            .getElementById("category")
+            .value;
+
+
+    const phone =
+        document
+            .getElementById("phone")
+            .value
+            .trim();
+
+
+    const address =
+        document
+            .getElementById("address")
+            .value
+            .trim();
+
+
+    const complaint =
+        document
+            .getElementById("complaint")
+            .value
+            .trim();
+
+
+    if (!subject ||
+        !category ||
+        !address ||
+        !complaint) {
+
+        showToast(
+            "Please fill in all required fields."
+        );
+
+        return;
+
+    }
+
+
+    const report = {
+
+        id: createId("issue"),
+
+        subject,
+
+        category,
+
+        phone,
+
+        address,
+
+        complaint,
+
+        status: "Pending",
+
+        userId: currentUser.id,
+
+        createdAt: Date.now(),
+
+        date:
+            new Date()
+                .toLocaleString("en-IN")
+
+    };
+
+
+    const reports =
+        load(KEYS.issues, []);
+
+
+    reports.push(report);
+
+    save(KEYS.issues, reports);
+
+
+    event.target.reset();
+
+
+    renderIssues();
+
+
+    showToast(
+        "✅ Complaint submitted successfully!"
+    );
+
+
+    setTimeout(() => {
+
+        document
+            .getElementById("issues")
+            .scrollIntoView({
+                behavior:"smooth"
+            });
+
+    },100);
+
+}
+
+
+function renderIssues() {
+
+    const list =
+        document.getElementById("issuesList");
+
+
+    const reports =
+        load(KEYS.issues, []);
+
+
+    if (!reports.length) {
+
+        list.innerHTML = `
+
+            <div class="empty card">
 
                 <h3>
                     No Issues Yet
                 </h3>
 
-                <p>
-                    No civic issues have been submitted yet.
-                </p>
-
-                <p>
-                    Be the first to report a civic issue.
+                <p style="margin-top:7px">
+                    Be the first to report a
+                    civic problem.
                 </p>
 
             </div>
 
-        </div>
+        `;
 
-        <!-- STORAGE CONTROLS -->
+        return;
 
-        <div class="storage-panel">
+    }
 
-            <div class="storage-info">
-                💾 <strong>Local Storage:</strong>
-                Your submitted issues are saved in this browser.
-            </div>
 
-            <button
-                class="clear-btn"
-                type="button"
-                onclick="clearAllIssues()"
-            >
-                Clear Saved Issues
-            </button>
+    list.innerHTML =
+        reports
+            .slice()
+            .reverse()
+            .map((report,index) => `
 
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         REPORT ISSUE
-    ========================= -->
-
-    <section id="report">
-
-        <div class="report-card">
-
-            <div class="report-icon">
-                📢
-            </div>
-
-            <h2>
-                File a Complaint
-            </h2>
-
-            <p>
-                Found a problem in your community?
-                Tell CivicLink about it so the issue can
-                be recorded and reviewed.
-            </p>
-
-
-            <label for="subject">
-                Subject
-            </label>
-
-            <input
-                type="text"
-                id="subject"
-                maxlength="100"
-                placeholder="What is the problem?"
-            >
-
-
-            <label for="category">
-                Category
-            </label>
-
-            <select id="category">
-
-                <option value="">
-                    Select issue category
-                </option>
-
-                <option value="Roads">
-                    Roads & Potholes
-                </option>
-
-                <option value="Streetlights">
-                    Streetlights
-                </option>
-
-                <option value="Waste">
-                    Waste & Cleanliness
-                </option>
-
-                <option value="Water">
-                    Water Supply
-                </option>
-
-                <option value="Public Safety">
-                    Public Safety
-                </option>
-
-                <option value="Other">
-                    Other
-                </option>
-
-            </select>
-
-
-            <label for="complaint">
-                Complaint
-            </label>
-
-            <textarea
-                id="complaint"
-                rows="6"
-                maxlength="1000"
-                placeholder="Describe the problem in detail..."
-            ></textarea>
-
-
-            <label for="address">
-                Address
-            </label>
-
-            <input
-                type="text"
-                id="address"
-                maxlength="250"
-                placeholder="Enter the exact address"
-            >
-
-
-            <button
-                type="button"
-                class="location-btn"
-                onclick="getLocation()"
-            >
-                📍 Use Current Location
-            </button>
-
-            <p id="location-status">
-                Don't know the address?
-                You can use your current location.
-            </p>
-
-
-            <button
-                type="button"
-                class="submit-btn"
-                onclick="submitComplaint()"
-            >
-                Submit Complaint →
-            </button>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         ABOUT
-    ========================= -->
-
-    <section id="about">
-
-        <h2 class="section-title">
-            About CivicLink
-        </h2>
-
-        <p class="section-subtitle">
-            A simple idea: make it easier for people to understand
-            civic problems and easier for communities to report them.
-        </p>
-
-        <div class="about-box">
-
-            <p>
-                <strong>CivicLink</strong> is a community-focused
-                civic platform designed to connect people with
-                information about the issues around them.
-            </p>
-
-            <p>
-                The idea begins in Andhra Pradesh and can eventually
-                expand to communities across India. People should
-                be able to report problems such as damaged roads,
-                broken streetlights, waste-management problems,
-                water issues and other civic concerns from one
-                simple platform.
-            </p>
-
-            <p>
-                CivicLink is not only about reporting problems.
-                It is also about <strong>awareness</strong>.
-                By showing civic updates, community issues and
-                improvements, the platform can help people learn
-                more about how their communities are developing.
-            </p>
-
-            <p>
-                The long-term vision is to create a system where
-                a reported issue can be recorded, reviewed,
-                assigned to the appropriate team and eventually
-                marked as resolved.
-            </p>
-
-            <div class="steps">
-
-                <div class="step">
-                    <strong>1. Report</strong>
-                    <span>People submit a civic issue.</span>
-                </div>
-
-                <div class="step">
-                    <strong>2. Review</strong>
-                    <span>The report is checked.</span>
-                </div>
-
-                <div class="step">
-                    <strong>3. Action</strong>
-                    <span>The responsible team can respond.</span>
-                </div>
-
-                <div class="step">
-                    <strong>4. Resolve</strong>
-                    <span>The issue can be updated as resolved.</span>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         DEVELOPER
-    ========================= -->
-
-    <section id="developer">
-
-        <h2 class="section-title">
-            Meet the Developer
-        </h2>
-
-        <p class="section-subtitle">
-            Learn more about the creator behind CivicLink.
-        </p>
-
-        <div class="about-box">
-
-            <p>
-                <strong>Mohammed Farman</strong> is a student and
-                the developer of CivicLink. I am currently working
-                hard to excel in Physics and Mathematics, with
-                guidance from my teachers.
-            </p>
-
-            <p>
-                I have a passion for technology and am learning
-                HTML, CSS, and JavaScript, while also exploring
-                Machine Learning to build my own AI assistant.
-                Alongside CivicLink, I am developing Focura,
-                a productivity project.
-            </p>
-
-            <p>
-                I also enjoy playing Badminton and exploring
-                technology through personal projects.
-            </p>
-
-            <p>
-                Thank you for visiting my new web app.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         FOOTER
-    ========================= -->
-
-    <footer>
-
-        <p>
-            <strong>CivicLink © 2026</strong>
-        </p>
-
-        <p>
-            Built for better, safer and smarter communities.
-            Still under construction!
-        </p>
-
-    </footer>
-
-
-    <!-- =========================
-         JAVASCRIPT
-         LOCAL STORAGE VERSION
-    ========================= -->
-
-    <script>
-
-        /* =====================================
-           CIVICLINK STORAGE CONFIG
-        ===================================== */
-
-        const STORAGE_KEY = "civicLinkIssues";
-
-        let userLatitude = null;
-        let userLongitude = null;
-
-
-        /* =====================================
-           SAFE STORAGE READ
-        ===================================== */
-
-        function getIssues() {
-
-            try {
-
-                const saved =
-                    localStorage.getItem(STORAGE_KEY);
-
-                if (!saved) {
-                    return [];
-                }
-
-                const parsed =
-                    JSON.parse(saved);
-
-                return Array.isArray(parsed)
-                    ? parsed
-                    : [];
-
-            } catch (error) {
-
-                console.error(
-                    "Could not read CivicLink data:",
-                    error
-                );
-
-                return [];
-            }
-        }
-
-
-        /* =====================================
-           SAFE STORAGE SAVE
-        ===================================== */
-
-        function saveIssues(issues) {
-
-            try {
-
-                localStorage.setItem(
-                    STORAGE_KEY,
-                    JSON.stringify(issues)
-                );
-
-                return true;
-
-            } catch (error) {
-
-                console.error(
-                    "Could not save CivicLink data:",
-                    error
-                );
-
-                alert(
-                    "Unable to save the issue in this browser."
-                );
-
-                return false;
-            }
-        }
-
-
-        /* =====================================
-           CURRENT LOCATION
-        ===================================== */
-
-        function getLocation() {
-
-            const status =
-                document.getElementById(
-                    "location-status"
-                );
-
-
-            if (!navigator.geolocation) {
-
-                status.textContent =
-                    "❌ Location is not supported by this browser.";
-
-                return;
-            }
-
-
-            status.textContent =
-                "📍 Getting your current location...";
-
-
-            navigator.geolocation.getCurrentPosition(
-
-                function(position) {
-
-                    userLatitude =
-                        position.coords.latitude;
-
-                    userLongitude =
-                        position.coords.longitude;
-
-
-                    status.textContent =
-                        "✅ Current location added successfully.";
-
-                },
-
-                function(error) {
-
-                    console.error(
-                        "Geolocation error:",
-                        error
-                    );
-
-                    status.textContent =
-                        "❌ Location permission was not given.";
-
-                },
-
-                {
-                    enableHighAccuracy: true,
-                    timeout: 10000,
-                    maximumAge: 0
-                }
-
-            );
-
-        }
-
-
-        /* =====================================
-           SUBMIT COMPLAINT
-        ===================================== */
-
-        function submitComplaint() {
-
-            const subject =
-                document
-                    .getElementById("subject")
-                    .value
-                    .trim();
-
-            const category =
-                document
-                    .getElementById("category")
-                    .value;
-
-            const complaint =
-                document
-                    .getElementById("complaint")
-                    .value
-                    .trim();
-
-            const address =
-                document
-                    .getElementById("address")
-                    .value
-                    .trim();
-
-
-            /* VALIDATION */
-
-            if (!subject) {
-
-                alert(
-                    "Please enter the subject."
-                );
-
-                return;
-            }
-
-
-            if (!category) {
-
-                alert(
-                    "Please select a category."
-                );
-
-                return;
-            }
-
-
-            if (!complaint) {
-
-                alert(
-                    "Please describe the complaint."
-                );
-
-                return;
-            }
-
-
-            if (
-                !address &&
-                userLatitude === null
-            ) {
-
-                alert(
-                    "Please enter the address or use your current location."
-                );
-
-                return;
-            }
-
-
-            /* GET SAVED ISSUES */
-
-            const issues =
-                getIssues();
-
-
-            /* CREATE UNIQUE ISSUE */
-
-            const newIssue = {
-
-                id:
-                    crypto.randomUUID
-                    ? crypto.randomUUID()
-                    : String(Date.now()),
-
-                number:
-                    issues.length + 1,
-
-                subject:
-                    subject,
-
-                category:
-                    category,
-
-                complaint:
-                    complaint,
-
-                address:
-                    address,
-
-                latitude:
-                    userLatitude,
-
-                longitude:
-                    userLongitude,
-
-                status:
-                    "Pending",
-
-                date:
-                    new Date().toLocaleString(
-                        "en-IN"
-                    )
-
-            };
-
-
-            /* SAVE */
-
-            issues.push(newIssue);
-
-
-            const saved =
-                saveIssues(issues);
-
-
-            if (!saved) {
-                return;
-            }
-
-
-            /* REFRESH UI */
-
-            displayIssues();
-
-
-            /* CLEAR FORM */
-
-            document
-                .getElementById("subject")
-                .value = "";
-
-            document
-                .getElementById("category")
-                .value = "";
-
-            document
-                .getElementById("complaint")
-                .value = "";
-
-            document
-                .getElementById("address")
-                .value = "";
-
-
-            userLatitude = null;
-            userLongitude = null;
-
-
-            document
-                .getElementById("location-status")
-                .textContent =
-                "Don't know the address? You can use your current location.";
-
-
-            /* MOVE TO ISSUES */
-
-            document
-                .getElementById("issues")
-                .scrollIntoView({
-                    behavior: "smooth"
-                });
-
-
-            alert(
-                "✅ Complaint submitted successfully!"
-            );
-
-        }
-
-
-        /* =====================================
-           DISPLAY ISSUES
-        ===================================== */
-
-        function displayIssues() {
-
-            const issuesList =
-                document.getElementById(
-                    "issues-list"
-                );
-
-            const emptyMessage =
-                document.getElementById(
-                    "empty-issues"
-                );
-
-
-            const issues =
-                getIssues();
-
-
-            /* REMOVE PREVIOUS GENERATED CARDS */
-
-            document
-                .querySelectorAll(
-                    ".generated-issue"
-                )
-                .forEach(function(card) {
-
-                    card.remove();
-
-                });
-
-
-            /* EMPTY STATE */
-
-            if (issues.length === 0) {
-
-                emptyMessage.style.display =
-                    "block";
-
-                return;
-            }
-
-
-            emptyMessage.style.display =
-                "none";
-
-
-            /* CREATE CARDS */
-
-            issues.forEach(function(issue, index) {
-
-                const card =
-                    document.createElement(
-                        "div"
-                    );
-
-
-                card.className =
-                    "issue-card generated-issue";
-
-
-                let locationText =
-                    "Location not provided";
-
-
-                if (issue.address) {
-
-                    locationText =
-                        "📍 " +
-                        issue.address;
-
-                }
-
-
-                if (
-                    issue.latitude !== null &&
-                    issue.longitude !== null
-                ) {
-
-                    locationText +=
-                        " • GPS: " +
-                        Number(
-                            issue.latitude
-                        ).toFixed(5) +
-                        ", " +
-                        Number(
-                            issue.longitude
-                        ).toFixed(5);
-
-                }
-
-
-                const issueNumber =
-                    index + 1;
-
-
-                card.innerHTML = `
-
-                    <div class="issue-number">
-                        CIVICLINK ISSUE #${issueNumber}
-                    </div>
+                <article class="issue-card">
 
                     <div class="issue-top">
 
-                        <h3>
-                            ${escapeHTML(
-                                issue.subject
-                            )}
-                        </h3>
+                        <div>
+
+                            <div class="issue-id">
+                                CIVICLINK ISSUE #${
+                                    reports.length - index
+                                }
+                            </div>
+
+                            <h3>
+                                ${escapeHTML(
+                                    report.subject
+                                )}
+                            </h3>
+
+                        </div>
+
 
                         <span class="status">
                             ${escapeHTML(
-                                issue.status
+                                report.status
                             )}
                         </span>
 
                     </div>
 
+
                     <p>
                         ${escapeHTML(
-                            issue.complaint
+                            report.complaint
                         )}
                     </p>
+
 
                     <div class="issue-meta">
 
                         🏷️
                         ${escapeHTML(
-                            issue.category
+                            report.category
                         )}
 
                         <br>
 
+                        📍
                         ${escapeHTML(
-                            locationText
+                            report.address
                         )}
 
                         <br>
 
                         🕒
                         ${escapeHTML(
-                            issue.date
+                            report.date
+                        )}
+
+                        <br>
+
+                        🔒 Contact number:
+                        private
+
+                    </div>
+
+                </article>
+
+            `)
+            .join("");
+
+}
+
+
+/* =========================================================
+   COMMUNITIES
+========================================================= */
+
+function renderCommunities() {
+
+    const container =
+        document.getElementById(
+            "communityView"
+        );
+
+
+    if (activeCommunity) {
+
+        const previousInput =
+            document.getElementById("chatInput");
+        const draft = previousInput
+            ? previousInput.value
+            : "";
+        const restoreFocus =
+            previousInput &&
+            document.activeElement === previousInput;
+        const selectionStart =
+            previousInput && previousInput.selectionStart;
+        const selectionEnd =
+            previousInput && previousInput.selectionEnd;
+
+        container.innerHTML =
+            renderChat(activeCommunity);
+
+        const nextInput =
+            document.getElementById("chatInput");
+        if (nextInput) {
+            nextInput.value = draft;
+            if (restoreFocus && !nextInput.disabled) {
+                nextInput.focus();
+                if (selectionStart !== null && selectionEnd !== null) {
+                    nextInput.setSelectionRange(
+                        selectionStart,
+                        selectionEnd
+                    );
+                }
+            }
+        }
+
+        renderChatMessages(activeCommunity);
+        scrollChat();
+
+        return;
+
+    }
+
+
+    const communities =
+        load(KEYS.communities, []);
+
+
+    container.innerHTML = `
+
+        <div class="grid">
+
+            <div class="span-8">
+
+                <div
+                    class="between"
+                    style="margin-bottom:15px"
+                >
+
+                    <h3>
+                        Civic Communities
+                    </h3>
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="createCommunity()"
+                    >
+                        ＋ Create Community
+                    </button>
+
+                </div>
+
+
+                <div class="community-list">
+
+                    ${
+                        communities.length
+
+                        ?
+
+                        communities
+                            .map(
+                                communityCard
+                            )
+                            .join("")
+
+                        :
+
+                        `
+                        <div class="empty card">
+
+                            <h3>
+                                No Communities Yet
+                            </h3>
+
+                            <p style="margin-top:7px">
+                                Create the first civic
+                                community.
+                            </p>
+
+                        </div>
+                        `
+                    }
+
+                </div>
+
+            </div>
+
+
+            <div class="span-4 card">
+
+                <h3>
+                    Community Safety
+                </h3>
+
+                <p
+                    class="community-rules"
+                    style="margin-top:10px"
+                >
+
+                    Communities are for lawful civic
+                    discussion and public information.
+
+                    <br><br>
+
+                    No threats, harassment, doxxing,
+                    violence, or dangerous instructions.
+
+                    <br><br>
+
+                    Users should report harmful or
+                    misleading content.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+function communityCard(community) {
+
+    const members = Array.isArray(community.members)
+        ? [...new Set(community.members)]
+        : [];
+
+    return `
+
+        <article class="community-card">
+
+            <div class="community-header">
+
+                <div>
+
+                    <h3>
+                        ${escapeHTML(
+                            community.name
+                        )}
+                    </h3>
+
+                    <span class="pill">
+                        @${escapeHTML(
+                            community.organizerUsername
+                        )}
+                    </span>
+
+                </div>
+
+
+                <button
+                    class="btn"
+                    onclick="
+                        openCommunity(
+                            '${community.id}'
+                        )
+                    "
+                >
+                    Open Chat
+                </button>
+
+            </div>
+
+
+            <p style="margin-top:10px">
+
+                ${escapeHTML(
+                    community.description
+                )}
+
+            </p>
+
+
+            ${
+                community.event &&
+                community.event.date
+
+                ?
+
+                `
+
+                <div class="event-box">
+
+                    📅
+                    <strong>
+                        ${escapeHTML(
+                            community.event.date
+                        )}
+                    </strong>
+
+                    <br>
+
+                    🕐
+                    ${escapeHTML(
+                        community.event.time ||
+                        "Time TBA"
+                    )}
+
+                    <br>
+
+                    📍
+                    ${escapeHTML(
+                        community.event.venue ||
+                        "Venue TBA"
+                    )}
+
+                </div>
+
+                `
+
+                :
+
+                ""
+            }
+
+
+            <div
+                class="small muted"
+                style="margin-top:12px"
+            >
+
+                👥
+                ${members.length}
+                members
+
+            </div>
+
+            <div class="community-members" aria-label="Community members">
+                ${
+                    members.length
+                        ? members.map(id => `
+                            <span class="member-chip">
+                                @${escapeHTML(
+                                    getMemberProfile(community, id).username
+                                )}
+                            </span>
+                        `).join("")
+                        : `<span class="small muted">No members yet.</span>`
+                }
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* =========================================================
+   CREATE COMMUNITY
+========================================================= */
+
+function createCommunity() {
+
+    openModal(`
+
+        <h2>
+            Create a Civic Community
+        </h2>
+
+        <p
+            class="muted"
+            style="margin:8px 0 18px"
+        >
+            Create a community for lawful civic
+            discussion, announcements and events.
+        </p>
+
+
+        <form
+            id="communityForm"
+            class="form"
+        >
+
+            <div class="field">
+
+                <label>
+                    Community name
+                </label>
+
+                <input
+                    class="input"
+                    id="communityName"
+                    required
+                    maxlength="80"
+                    placeholder="Example: Clean Vizianagaram"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Description
+                </label>
+
+                <textarea
+                    class="textarea"
+                    id="communityDescription"
+                    required
+                    maxlength="1000"
+                    placeholder="What is this community about?"
+                ></textarea>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Event date
+                </label>
+
+                <input
+                    class="input"
+                    id="communityDate"
+                    type="date"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Event time
+                </label>
+
+                <input
+                    class="input"
+                    id="communityTime"
+                    type="time"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Venue
+                </label>
+
+                <input
+                    class="input"
+                    id="communityVenue"
+                    maxlength="250"
+                    placeholder="Public venue / meeting point"
+                >
+
+            </div>
+
+
+            <button
+                class="btn btn-primary"
+                type="submit"
+            >
+                Create Community
+            </button>
+
+        </form>
+
+    `);
+
+
+    document
+        .getElementById("communityForm")
+        .addEventListener(
+            "submit",
+            saveCommunity
+        );
+
+}
+
+
+function saveCommunity(event) {
+
+    event.preventDefault();
+
+
+    const community = {
+
+        id: createId("community"),
+
+        name:
+            document
+                .getElementById(
+                    "communityName"
+                )
+                .value
+                .trim(),
+
+
+        description:
+            document
+                .getElementById(
+                    "communityDescription"
+                )
+                .value
+                .trim(),
+
+
+        organizerId:
+            currentUser.id,
+
+
+        organizerUsername:
+            currentUser.username,
+
+
+        members: [
+            currentUser.id
+        ],
+
+        memberProfiles: {
+            [currentUser.id]: {
+                username: currentUser.username,
+                name: currentUser.name
+            }
+        },
+
+
+        event: {
+
+            date:
+                document
+                    .getElementById(
+                        "communityDate"
+                    )
+                    .value,
+
+            time:
+                document
+                    .getElementById(
+                        "communityTime"
+                    )
+                    .value,
+
+            venue:
+                document
+                    .getElementById(
+                        "communityVenue"
+                    )
+                    .value
+                    .trim()
+
+        },
+
+
+        createdAt: Date.now()
+
+    };
+
+
+    const communities =
+        load(KEYS.communities, []);
+
+
+    communities.push(community);
+
+    save(
+        KEYS.communities,
+        communities
+    );
+
+
+    closeModal();
+
+    renderCommunities();
+
+    showToast(
+        "Community created!"
+    );
+
+}
+
+
+/* =========================================================
+   OPEN COMMUNITY
+========================================================= */
+
+function openCommunity(id) {
+
+    activeCommunity = id;
+    selectionMode = false;
+    selectedMessageIds.clear();
+
+    renderCommunities();
+
+    document
+        .getElementById("communities")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+
+}
+
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+function renderChat(id) {
+
+    const communities =
+        load(KEYS.communities, []);
+
+
+    const community =
+        communities.find(
+            c => c.id === id
+        );
+
+
+    if (!community) {
+
+        activeCommunity = null;
+
+        return "";
+
+    }
+
+
+    const joined =
+        community.members.includes(
+            currentUser.id
+        );
+
+
+    const members = [...new Set(
+        Array.isArray(community.members) ? community.members : []
+    )];
+
+    const selectedOwnedCount = load(KEYS.messages, [])
+        .filter(message =>
+            message.communityId === id &&
+            message.userId === currentUser.id &&
+            selectedMessageIds.has(message.id)
+        ).length;
+
+
+    return `
+
+        <div class="chat-shell">
+
+            <div class="chat-header">
+
+                <div class="between">
+
+                    <div>
+
+                        <button
+                            class="btn"
+                            onclick="closeCommunityChat()"
+                        >
+                            ← Back
+                        </button>
+
+                        <div
+                            class="chat-header-title"
+                            style="margin-top:12px"
+                        >
+
+                            <h2>
+                                ${escapeHTML(
+                                    community.name
+                                )}
+                            </h2>
+
+                        </div>
+
+                        <div
+                            class="small muted"
+                            style="margin-top:5px"
+                        >
+
+                            ${escapeHTML(
+                                community.description
+                            )}
+
+                        </div>
+
+                        <div class="chat-member-roster small muted">
+                            👥 ${members.length} ${members.length === 1 ? "member" : "members"}
+                            <div class="community-members" aria-label="Community members">
+                                ${
+                                    members.map(memberId => `
+                                        <span class="member-chip">
+                                            @${escapeHTML(getMemberProfile(community, memberId).username)}
+                                            ${memberId === currentUser.id ? "(you)" : ""}
+                                        </span>
+                                    `).join("") || "No members yet."
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="btn ${
+                            joined
+                                ? "btn-danger"
+                                : "btn-primary"
+                        }"
+                        onclick="
+                            toggleJoin(
+                                '${id}'
+                            )
+                        "
+                    >
+
+                        ${
+                            joined
+                                ? "Leave"
+                                : "Join to Chat"
+                        }
+
+                    </button>
+
+                </div>
+
+
+                ${
+                    community.event &&
+                    community.event.date
+
+                    ?
+
+                    `
+
+                    <div class="event-box">
+
+                        📅
+                        ${escapeHTML(
+                            community.event.date
+                        )}
+
+                        &nbsp; • &nbsp;
+
+                        🕐
+                        ${escapeHTML(
+                            community.event.time ||
+                            "Time TBA"
+                        )}
+
+                        &nbsp; • &nbsp;
+
+                        📍
+                        ${escapeHTML(
+                            community.event.venue ||
+                            "Venue TBA"
                         )}
 
                     </div>
 
-                `;
+                    `
+
+                    :
+
+                    ""
+
+                }
+
+            </div>
 
 
-                issuesList.appendChild(card);
+            <div
+                class="messages"
+                id="messages"
+                aria-live="polite"
+            >
+            </div>
 
-            });
+            <div class="chat-tools">
+                <button
+                    class="btn"
+                    type="button"
+                    onclick="toggleMessageSelection()"
+                >${selectionMode ? "Cancel selection" : "Select"}</button>
+                ${
+                    selectionMode
+                        ? `
+                            <button class="btn" type="button" onclick="selectAllOwnMessages('${escapeHTML(id)}')">Select all mine</button>
+                            <span class="selection-status" aria-live="polite">${selectedOwnedCount} selected · your messages only</span>
+                            ${
+                                selectedOwnedCount
+                                    ? `<button class="btn btn-danger" type="button" onclick="deleteSelectedMessages('${escapeHTML(id)}')">Delete (${selectedOwnedCount})</button>`
+                                    : ""
+                            }
+                        `
+                        : ""
+                }
+            </div>
 
-        }
+            <form
+                class="chat-composer"
+                onsubmit="
+                    sendMessage(
+                        event,
+                        '${id}'
+                    )
+                "
+            >
 
-
-        /* =====================================
-           ESCAPE USER TEXT
-        ===================================== */
-
-        function escapeHTML(text) {
-
-            const div =
-                document.createElement(
-                    "div"
-                );
-
-            div.textContent =
-                String(text ?? "");
-
-            return div.innerHTML;
-
-        }
-
-
-        /* =====================================
-           CLEAR ALL LOCAL DATA
-        ===================================== */
-
-        function clearAllIssues() {
-
-            const issues =
-                getIssues();
-
-
-            if (issues.length === 0) {
-
-                alert(
-                    "There are no saved issues to clear."
-                );
-
-                return;
-            }
-
-
-            const confirmed =
-                confirm(
-                    "Delete all CivicLink issues saved in this browser?"
-                );
-
-
-            if (!confirmed) {
-                return;
-            }
+                <input
+                    class="input"
+                    id="chatInput"
+                    maxlength="1000"
+                    aria-label="Message"
+                    autocomplete="off"
+                    placeholder="${
+                        joined
+                            ? "Write a message..."
+                            : "Join the community to chat"
+                    }"
+                    ${joined && !sendingMessage ? "" : "disabled"}
+                >
 
 
-            localStorage.removeItem(
-                STORAGE_KEY
+                <button
+                    class="btn btn-primary"
+                    ${joined && !sendingMessage ? "" : "disabled"}
+                >
+                    Send
+                </button>
+
+            </form>
+
+        </div>
+
+    `;
+
+}
+
+
+function closeCommunityChat() {
+    activeCommunity = null;
+    selectionMode = false;
+    selectedMessageIds.clear();
+    renderCommunities();
+}
+
+
+function getMemberProfile(community, userId) {
+    const profile = community.memberProfiles &&
+        community.memberProfiles[userId];
+
+    if (profile && profile.username) return profile;
+
+    if (userId === community.organizerId) {
+        return {
+            username: community.organizerUsername || "community_owner",
+            name: community.organizerUsername || "Community owner"
+        };
+    }
+
+    if (userId === currentUser.id) {
+        return { username: currentUser.username, name: currentUser.name };
+    }
+
+    return { username: "member", name: "Community member" };
+}
+
+
+function renderChatMessages(communityId) {
+    const container = document.getElementById("messages");
+    if (!container) return;
+
+    const messages = load(KEYS.messages, [])
+        .filter(message => message.communityId === communityId);
+
+    selectedMessageIds = new Set(
+        [...selectedMessageIds].filter(id =>
+            messages.some(message =>
+                message.id === id &&
+                message.userId === currentUser.id
+            )
+        )
+    );
+
+    if (!messages.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "No messages yet. Start the conversation.";
+        container.replaceChildren(empty);
+        return;
+    }
+
+    const fragment = document.createDocumentFragment();
+    messages.forEach(message => {
+        const owned = message.userId === currentUser.id;
+        const bubble = document.createElement("article");
+        bubble.className = `message${owned ? " mine" : " owned-by-other"}${
+            selectedMessageIds.has(message.id) ? " selected" : ""
+        }`;
+        bubble.dataset.messageId = message.id;
+
+        if (selectionMode) {
+            const label = document.createElement("label");
+            label.className = "message-selection";
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = selectedMessageIds.has(message.id);
+            checkbox.disabled = !owned;
+            checkbox.setAttribute(
+                "aria-label",
+                owned ? `Select message from ${message.username}` : "Only your messages can be deleted"
             );
-
-
-            displayIssues();
-
-
-            alert(
-                "🗑️ All locally saved issues have been removed."
+            checkbox.addEventListener("change", () =>
+                toggleSelectedMessage(message.id, checkbox.checked)
             );
-
+            label.append(checkbox, document.createTextNode(
+                owned ? "Select message" : "Not your message"
+            ));
+            bubble.append(label);
         }
 
+        const meta = document.createElement("div");
+        meta.className = "message-meta";
+        meta.textContent = `@${message.username || "member"} · ${
+            new Date(message.createdAt).toLocaleString([], {
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            })
+        }`;
 
-        /* =====================================
-           START APPLICATION
-        ===================================== */
+        const text = document.createElement("div");
+        text.className = "message-text";
+        text.textContent = message.text;
+        bubble.append(meta, text);
+        fragment.append(bubble);
+    });
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            function() {
+    container.replaceChildren(fragment);
+}
 
-                displayIssues();
 
-            }
+function toggleMessageSelection() {
+    selectionMode = !selectionMode;
+    selectedMessageIds.clear();
+    renderCommunities();
+}
+
+
+function toggleSelectedMessage(messageId, selected) {
+    if (selected) {
+        selectedMessageIds.add(messageId);
+    } else {
+        selectedMessageIds.delete(messageId);
+    }
+    renderCommunities();
+}
+
+
+function selectAllOwnMessages(communityId) {
+    selectedMessageIds = new Set(
+        load(KEYS.messages, [])
+            .filter(message =>
+                message.communityId === communityId &&
+                message.userId === currentUser.id
+            )
+            .map(message => message.id)
+    );
+    renderCommunities();
+}
+
+
+function deleteSelectedMessages(communityId) {
+    const selected = new Set(selectedMessageIds);
+    const messages = load(KEYS.messages, []);
+    const ownedSelected = messages.filter(message =>
+        message.communityId === communityId &&
+        message.userId === currentUser.id &&
+        selected.has(message.id)
+    );
+
+    if (!ownedSelected.length) return;
+
+    if (
+        ownedSelected.length > 1 &&
+        !window.confirm(`Delete these ${ownedSelected.length} messages? This cannot be undone.`)
+    ) {
+        return;
+    }
+
+    const deleting = new Set(ownedSelected.map(message => message.id));
+    save(KEYS.messages, messages.filter(message =>
+        !(
+            message.communityId === communityId &&
+            message.userId === currentUser.id &&
+            deleting.has(message.id)
+        )
+    ));
+    selectedMessageIds.clear();
+    showToast(`${ownedSelected.length} message${ownedSelected.length === 1 ? "" : "s"} deleted.`);
+    renderCommunities();
+}
+
+
+/* ---------------------------------------------------------
+   JOIN / LEAVE
+--------------------------------------------------------- */
+
+function toggleJoin(id) {
+
+    const communities =
+        load(KEYS.communities, []);
+
+
+    const community =
+        communities.find(
+            c => c.id === id
         );
 
-    </script>
+
+    if (!community) return;
+
+    community.members = Array.isArray(community.members)
+        ? [...new Set(community.members)]
+        : [];
+    community.memberProfiles = community.memberProfiles || {};
+
+    if (
+        community.members.includes(
+            currentUser.id
+        )
+    ) {
+
+        community.members =
+            community.members.filter(
+                userId =>
+                    userId !== currentUser.id
+            );
+
+        showToast(
+            "You left the community."
+        );
+
+    } else {
+
+        community.members.push(
+            currentUser.id
+        );
+        community.memberProfiles[currentUser.id] = {
+            username: currentUser.username,
+            name: currentUser.name
+        };
+
+        showToast(
+            "You joined the community!"
+        );
+
+    }
+
+
+    save(
+        KEYS.communities,
+        communities
+    );
+
+
+    renderCommunities();
+
+}
+
+
+/* ---------------------------------------------------------
+   SEND MESSAGE
+--------------------------------------------------------- */
+
+function sendMessage(event,id) {
+
+    event.preventDefault();
+
+    if (sendingMessage) return;
+
+    const input =
+        event.currentTarget.querySelector(
+            "#chatInput"
+        );
+
+    if (!input || !input.isConnected) return;
+
+
+    const text =
+        input.value.trim();
+
+
+    if (!text) {
+        input.setCustomValidity("Please enter a message before sending.");
+        input.reportValidity();
+        input.setCustomValidity("");
+        return;
+    }
+
+
+    const communities =
+        load(KEYS.communities, []);
+
+
+    const community =
+        communities.find(
+            c => c.id === id
+        );
+
+
+    if (
+        !community ||
+        !community.members.includes(
+            currentUser.id
+        )
+    ) {
+
+        showToast(
+            "Join the community first."
+        );
+
+        return;
+
+    }
+
+    sendingMessage = true;
+
+    const messages =
+        load(KEYS.messages, []);
+
+
+    messages.push({
+
+        id: createId("message"),
+
+        communityId: id,
+
+        userId: currentUser.id,
+
+        username:
+            currentUser.username,
+
+        text,
+
+        createdAt: new Date().toISOString()
+
+    });
+
+
+    save(
+        KEYS.messages,
+        messages
+    );
+
+
+    input.value = "";
+
+    sendingMessage = false;
+
+    renderCommunities();
+
+    scrollChat();
+    const nextInput =
+        document.getElementById("chatInput");
+    if (nextInput && !nextInput.disabled) {
+        nextInput.focus();
+    }
+
+}
+
+
+function scrollChat() {
+
+    setTimeout(() => {
+
+        const messages =
+            document.getElementById(
+                "messages"
+            );
+
+        if (messages) {
+
+            messages.scrollTop =
+                messages.scrollHeight;
+
+        }
+
+    },50);
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function openProfile() {
+
+    const initial =
+        escapeHTML(
+            (currentUser.name ||
+             currentUser.username)
+            .charAt(0)
+            .toUpperCase()
+        );
+
+
+    openModal(`
+
+        <h2>
+            Your CivicLink Profile
+        </h2>
+
+
+        <div
+            class="profile-head"
+            style="margin-top:18px"
+        >
+
+            <div class="avatar">
+                ${initial}
+            </div>
+
+            <div>
+
+                <strong>
+                    @${escapeHTML(
+                        currentUser.username
+                    )}
+                </strong>
+
+                <div class="muted">
+                    ${escapeHTML(
+                        currentUser.name
+                    )}
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <form
+            id="profileForm"
+            class="form"
+            style="margin-top:20px"
+        >
+
+            <div class="field">
+
+                <label>
+                    Username
+                </label>
+
+                <input
+                    class="input"
+                    id="profileUsername"
+                    value="${escapeHTML(
+                        currentUser.username
+                    )}"
+                    maxlength="24"
+                >
+
+                <div class="helper">
+                    Letters, numbers and underscores
+                    only.
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    Display name
+                </label>
+
+                <input
+                    class="input"
+                    id="profileName"
+                    value="${escapeHTML(
+                        currentUser.name
+                    )}"
+                    maxlength="50"
+                >
+
+            </div>
+
+            <div class="field">
+                <label for="profilePhone">Phone number</label>
+                <input
+                    class="input"
+                    id="profilePhone"
+                    value="${escapeHTML(loadAuthAccount()?.phone || "")}"
+                    readonly
+                    aria-describedby="profilePhonePrivacy"
+                >
+                <div class="helper" id="profilePhonePrivacy">
+                    Stored locally for account login; not shown publicly.
+                </div>
+            </div>
+
+            <div class="field">
+
+                <label for="profileState">
+                    State / location
+                </label>
+
+                <input
+                    class="input"
+                    id="profileState"
+                    value="${escapeHTML(
+                        loadAuthAccount()?.state || ""
+                    )}"
+                    maxlength="80"
+                    required
+                >
+
+            </div>
+
+            <div class="field">
+                <label>Current location (Optional)</label>
+                <button
+                    class="btn"
+                    id="profileLocationButton"
+                    type="button"
+                >
+                    Update current location
+                </button>
+                <div class="helper" id="profileLocationStatus" aria-live="polite">
+                    ${
+                        loadAuthAccount()?.location
+                            ? `Saved coordinates: ${escapeHTML(loadAuthAccount().location.latitude)}, ${escapeHTML(loadAuthAccount().location.longitude)}`
+                            : "No coordinates saved. Location is optional."
+                    }
+                </div>
+            </div>
+
+
+            <button
+                class="btn btn-primary"
+                type="submit"
+            >
+                Save Profile
+            </button>
+
+            <button
+                class="btn"
+                type="button"
+                style="margin-left:6px"
+                onclick="showAuthentication('login')"
+            >
+                Log out
+            </button>
+
+        </form>
+
+    `);
+
+
+    document
+        .getElementById("profileForm")
+        .addEventListener(
+            "submit",
+            saveProfile
+        );
+
+    document
+        .getElementById("profileLocationButton")
+        .addEventListener("click", event => {
+            const status = document.getElementById("profileLocationStatus");
+            const button = event.currentTarget;
+            if (!navigator.geolocation) {
+                status.textContent = "Location isn't supported here.";
+                return;
+            }
+            button.disabled = true;
+            button.textContent = "Requesting location...";
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const authUser = loadAuthAccount();
+                    if (!authUser) return;
+                    authUser.location = {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    };
+                    save(KEYS.auth, authUser);
+                    button.disabled = false;
+                    button.textContent = "✓ Location updated";
+                    status.textContent =
+                        `Saved coordinates: ${authUser.location.latitude.toFixed(4)}, ${authUser.location.longitude.toFixed(4)}`;
+                },
+                error => {
+                    button.disabled = false;
+                    button.textContent = "Update current location";
+                    status.textContent = error.code === 1
+                        ? "Permission denied. You can keep using the state/location field."
+                        : "Couldn't detect location. You can keep using the state/location field.";
+                },
+                { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 }
+            );
+        });
+
+}
+
+
+function saveProfile(event) {
+
+    event.preventDefault();
+
+
+    const username =
+        document
+            .getElementById(
+                "profileUsername"
+            )
+            .value
+            .replace(
+                /[^a-zA-Z0-9_]/g,
+                ""
+            )
+            .slice(0,24);
+
+
+    const name =
+        document
+            .getElementById(
+                "profileName"
+            )
+            .value
+            .trim();
+
+    const state =
+        document
+            .getElementById("profileState")
+            .value
+            .trim();
+
+    if (name.length < 2 || state.length < 2) {
+        showToast("Enter a valid display name and state/location.");
+        return;
+    }
+
+    currentUser = {
+
+        ...currentUser,
+
+        username:
+            username ||
+            currentUser.username,
+
+        name:
+            name
+
+    };
+
+
+    save(
+        KEYS.user,
+        currentUser
+    );
+
+    const authUser = loadAuthAccount();
+    if (authUser) {
+        authUser.name = name;
+        authUser.state = state;
+        save(KEYS.auth, authUser);
+    }
+
+    const communities = load(KEYS.communities, []);
+    communities.forEach(community => {
+        if (
+            community.memberProfiles &&
+            community.memberProfiles[currentUser.id]
+        ) {
+            community.memberProfiles[currentUser.id] = {
+                username: currentUser.username,
+                name: currentUser.name
+            };
+        }
+    });
+    save(KEYS.communities, communities);
+
+    closeModal();
+
+
+    showToast(
+        "Profile updated!"
+    );
+
+}
+
+
+/* =========================================================
+   MOBILE NAV ACTIVE STATE
+========================================================= */
+
+function updateMobileNav() {
+
+    const hash =
+        location.hash || "#home";
+
+
+    document
+        .querySelectorAll(
+            ".mobile-nav a"
+        )
+        .forEach(link => {
+
+            link.classList.toggle(
+                "active",
+                link.getAttribute("href") === hash
+            );
+
+        });
+
+}
+
+
+window.addEventListener(
+    "hashchange",
+    updateMobileNav
+);
+
+
+/* =========================================================
+   LOCAL COMMUNITY STORAGE
+
+   Communities and messages are stored in localStorage.
+   The storage event synchronizes changes across tabs for
+   this browser profile; it is not a cross-device backend.
+   ========================================================= */
+
+
+/* =========================================================
+   INITIAL RENDER
+========================================================= */
+
+window.addEventListener("storage", event => {
+
+    if (
+        event.key === KEYS.communities ||
+        event.key === KEYS.messages
+    ) {
+
+        renderCommunities();
+
+    }
+
+});
+
+
+initializeAuthentication();
+
+renderNews();
+
+renderIssues();
+
+renderCommunities();
+
+updateMobileNav();
+
+</script>
 
 </body>
-
 </html>
